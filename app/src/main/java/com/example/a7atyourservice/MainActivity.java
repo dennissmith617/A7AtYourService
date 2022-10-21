@@ -3,30 +3,42 @@ package com.example.a7atyourservice;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class MainActivity extends AppCompatActivity {
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.activity_main);
-
-        // Set button for main activity screen
-        Button atyoursvcbtn = findViewById(R.id.atyoursvcbtn);
-        atyoursvcbtn.setOnClickListener(this);
+        setContentView(R.layout.activity_main);
     }
 
-        @Override
-        public void onClick(View view) {
-            if(view.getId() == R.id.atyoursvcbtn) {
-                openServiceScreen();
-            }
-        }
-
-    public void openServiceScreen() {
-        Intent svcIntent = new Intent(this, Service.class);
-        startActivity(svcIntent);
+    public void startLaunchWebActivity(View view){
+        startActivity(new Intent(MainActivity.this, com.example.a7atyourservice.LaunchWebActivity.class));
     }
+
+    public void startWebViewActivity(View view){
+        startActivity(new Intent(MainActivity.this, com.example.a7atyourservice.WebViewActivity.class));
+    }
+
+    public void startWebServiceActivity(View view){
+        startActivity(new Intent(MainActivity.this, WebServiceActivity.class));
+    }
+
+    public void startNetworkInfoActivity(View view){
+        startActivity(new Intent(MainActivity.this, NetworkInfoActivity.class));
+    }
+
+    public void startRetrofitActivity(View view){
+        startActivity(new Intent(MainActivity.this, com.example.a7atyourservice.RetrofitActivity.class));
+    }
+
+
 
 }
+
+
+
+
+

@@ -1,34 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.a7atyourservice">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
-        android:dataExtractionRules="@xml/data_extraction_rules"
-        android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.A7AtYourService"
-        tools:targetApi="31" >
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity
+            android:name=".RetrofitActivity"
+            android:exported="true"></activity>
+
+        <meta-data
+            android:name="android.webkit.WebView.EnableSafeBrowsing"
+            android:value="false" />
+
         <activity
             android:name=".MainActivity"
-            android:exported = "true">
+            android:configChanges="orientation|keyboardHidden|screenSize">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-            <activity
-                android:name=".Service"
-                android:parentActivityName=".MainActivity"
-                android:configChanges="orientation|screenSize"
-                >
-            </activity>
         </activity>
+        <activity
+            android:name=".LaunchWebActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="Launch Web Activity" />
+        <activity
+            android:name=".WebViewActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="Embed Web View" />
+        <activity
+            android:name=".WebServiceActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="Get Data from Web Service" />
+        <activity
+            android:name=".NetworkInfoActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="Network Info" />
     </application>
-
 
 </manifest>

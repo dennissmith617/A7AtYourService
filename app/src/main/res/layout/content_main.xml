@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <Button
+        android:id="@+id/launchWebButton"
+        android:layout_width="270dp"
+        android:layout_height="wrap_content"
+        android:onClick="startLaunchWebActivity"
+        android:text="Launch Website" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="270dp"
+        android:layout_height="wrap_content"
+        android:onClick="startWebViewActivity"
+        android:text="Web View"
+        />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="270dp"
+        android:layout_height="wrap_content"
+        android:onClick="startWebServiceActivity"
+        android:text="Web Service" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="270dp"
+        android:layout_height="wrap_content"
+        android:onClick="startNetworkInfoActivity"
+        android:text="Network Info"
+        />
+
+
+    <Button
+        android:id="@+id/button8"
+        android:layout_width="270dp"
+        android:layout_height="wrap_content"
+        android:onClick="startRetrofitActivity"
+        android:text="Retrofit Activity"
+        />
+
+</LinearLayout>
