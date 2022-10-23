@@ -16,7 +16,8 @@
         android:usesCleartextTraffic="true">
         <activity
             android:name=".RetrofitActivity"
-            android:exported="true"></activity>
+            android:exported="true"
+            android:configChanges="orientation|screenSize"/>
 
         <meta-data
             android:name="android.webkit.WebView.EnableSafeBrowsing"

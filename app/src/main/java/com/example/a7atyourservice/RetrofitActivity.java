@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +24,7 @@ public class RetrofitActivity extends AppCompatActivity {
     private Button retrofitBtn;
     private IPlaceholder api;
     TextView webFeedback;
+    ProgressBar loadingBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +51,13 @@ public class RetrofitActivity extends AppCompatActivity {
     }
 
     private void getActivity(){
+        // Loading bar
+        loadingBar = findViewById(R.id.progressBar1);
+        loadingBar.setVisibility(View.VISIBLE);
+
         // to execute the call
         Call<PostModel> call = api.getActivityModels();
+
         //call.execute() runs on the current thread, which is main at the momement. This will crash
         // use Retrofit's method enque. This will automaically push the network call to background thread
         call.enqueue(new Callback<PostModel>() {
@@ -62,6 +69,10 @@ public class RetrofitActivity extends AppCompatActivity {
                 if(!response.isSuccessful()){
                     Log.d(TAG, "Call failed!" + response.code());
                     String error = "Call failed!" + response.code();
+                    // Stop loading
+                    loadingBar.setVisibility(View.GONE);
+
+                    // Set error text
                     webFeedback = findViewById(R.id.webFeedback);
                     webFeedback.setVisibility(View.VISIBLE);
                     webFeedback.setText(error);
@@ -74,19 +85,23 @@ public class RetrofitActivity extends AppCompatActivity {
                 str.append("HTTP Response Code:")
                         .append(response.code())
                         .append("\n")
-                        .append("Activity : ")
+                        .append("Activity: ")
                         .append(postModels.getActivity())
                         .append("\n")
-                        .append("Type :")
+                        .append("Type: ")
                         .append(postModels.getType())
                         .append("\n")
                         .append("Participants: ")
                         .append(postModels.getParticipants())
                         .append("\n");
 
-
+                    // Logs for debugging
                     Log.d(TAG, str.toString());
 
+                    // Stop loading
+                    loadingBar.setVisibility(View.GONE);
+
+                    // Set result text
                     webFeedback = findViewById(R.id.webFeedback);
                     webFeedback.setVisibility(View.VISIBLE);
                     webFeedback.setText(str);
@@ -94,7 +109,16 @@ public class RetrofitActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<PostModel> call, Throwable t) {
-                   Log.d(TAG, "Call failed!" + t.getMessage());
+                Log.d(TAG, "Call failed!" + t.getMessage());
+                String errorMessage = "Call failed!" + t.getMessage();
+
+                // Stop loading
+                loadingBar.setVisibility(View.GONE);
+
+                // Set result text
+                webFeedback = findViewById(R.id.webFeedback);
+                webFeedback.setVisibility(View.VISIBLE);
+                webFeedback.setText(errorMessage);
             }
 
         });
