@@ -3,29 +3,20 @@ package com.example.a7atyourservice.model;
 import com.google.gson.annotations.SerializedName;
 
 public class PostModel {
-    private String activity;
-    private String type;
-    private int participants;
+    private String status;
+    private EmailInfo data;
 
-    @SerializedName("body")
-    private String text;
-
-    public PostModel(String activity, String type, int participants) {
-        this.activity = activity;
-        this.type = type;
-        this.participants = participants;
+    public PostModel(String status, EmailInfo data) {
+        this.status = status;
+        this.data = data;
     }
 
-    public String getActivity() {
-        return activity;
+    public String getStatus() {
+        return status;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public int getParticipants() {
-        return participants;
+    public EmailInfo getData() {
+        return data;
     }
 
 }

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -35,12 +36,12 @@ public class RetrofitActivity extends AppCompatActivity {
         retrofitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getActivity();
+                getEmailsWithQuery();
             }
         });
 
         retrofit = new Retrofit.Builder()
-                .baseUrl("https://www.boredapi.com/api/")
+                .baseUrl("https://api.eva.pingutil.com/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -50,25 +51,27 @@ public class RetrofitActivity extends AppCompatActivity {
 
     }
 
-    private void getActivity(){
+    private void getEmailsWithQuery(){
         // Loading bar
         loadingBar = findViewById(R.id.progressBar1);
         loadingBar.setVisibility(View.VISIBLE);
 
-        // to execute the call
-        Call<PostModel> call = api.getActivityModels();
+        // Get input email
+        EditText emailText = (EditText) findViewById(R.id.textEntry);
 
-        //call.execute() runs on the current thread, which is main at the momement. This will crash
-        // use Retrofit's method enque. This will automaically push the network call to background thread
+        // to execute the call
+        //api:: https://api.eva.pingutil.com/email?email=INPUT
+        Call<PostModel> call = api.getEmailsWithQuery(emailText.getText().toString());
+
+
         call.enqueue(new Callback<PostModel>() {
             @Override
             public void onResponse(Call<PostModel> call, Response<PostModel> response) {
-                //This gets called when atleast the call reaches a server and there was a response BUT 404 or any legitimate error code from the server, also calls this
-                // check response code is between 200-300 and API was found
-
                 if(!response.isSuccessful()){
-                    Log.d(TAG, "Call failed!" + response.code());
                     String error = "Call failed!" + response.code();
+
+                    Log.d(TAG, error);
+
                     // Stop loading
                     loadingBar.setVisibility(View.GONE);
 
@@ -79,38 +82,55 @@ public class RetrofitActivity extends AppCompatActivity {
                     return;
                 }
 
-                Log.d(TAG, "Call Success!");
-                PostModel postModels = response.body();
+                Log.d(TAG, "Call Successed!");
+                PostModel postModel = response.body();
                 StringBuffer  str = new StringBuffer();
-                str.append("HTTP Response Code:")
-                        .append(response.code())
+                str.append("Status: ")
+                        .append(postModel.getStatus())
                         .append("\n")
-                        .append("Activity: ")
-                        .append(postModels.getActivity())
+                        .append("Email Address: ")
+                        .append(postModel.getData().getEmail_address())
                         .append("\n")
-                        .append("Type: ")
-                        .append(postModels.getType())
+                        .append("Valid Syntax: ")
+                        .append(postModel.getData().getValid_syntax())
                         .append("\n")
-                        .append("Participants: ")
-                        .append(postModels.getParticipants())
+                        .append("Disposable: ")
+                        .append(postModel.getData().getDisposable())
+                        .append("\n")
+                        .append("Webmail: ")
+                        .append(postModel.getData().getWebmail())
+                        .append("\n")
+                        .append("Deliverable: ")
+                        .append(postModel.getData().getDeliverable())
+                        .append("\n")
+                        .append("Catch All: ")
+                        .append(postModel.getData().getCatch_all())
+                        .append("\n")
+                        .append("Gibberish: ")
+                        .append(postModel.getData().getGibberish())
+                        .append("\n")
+                        .append("Spam: ")
+                        .append(postModel.getData().getSpam())
                         .append("\n");
 
-                    // Logs for debugging
-                    Log.d(TAG, str.toString());
 
-                    // Stop loading
-                    loadingBar.setVisibility(View.GONE);
+                Log.d(TAG, str.toString());
 
-                    // Set result text
-                    webFeedback = findViewById(R.id.webFeedback);
-                    webFeedback.setVisibility(View.VISIBLE);
-                    webFeedback.setText(str);
+                // Stop loading
+                loadingBar.setVisibility(View.GONE);
+
+                // Set result text
+                webFeedback = findViewById(R.id.webFeedback);
+                webFeedback.setVisibility(View.VISIBLE);
+                webFeedback.setText(str);
             }
 
             @Override
             public void onFailure(Call<PostModel> call, Throwable t) {
-                Log.d(TAG, "Call failed!" + t.getMessage());
-                String errorMessage = "Call failed!" + t.getMessage();
+                String errorMessage = "Call failed! " + t.getMessage();
+
+                // Debug logs
+                Log.d(TAG, errorMessage);
 
                 // Stop loading
                 loadingBar.setVisibility(View.GONE);
@@ -119,8 +139,8 @@ public class RetrofitActivity extends AppCompatActivity {
                 webFeedback = findViewById(R.id.webFeedback);
                 webFeedback.setVisibility(View.VISIBLE);
                 webFeedback.setText(errorMessage);
-            }
 
+            }
         });
     }
 }
