@@ -12,6 +12,7 @@ public class EmailInfo {
     private boolean gibberish;
     private boolean spam;
 
+    // Represents the email data from API
     public EmailInfo(String email_address, String domain, boolean valid_syntax,
                      boolean disposable, boolean webmail, boolean deliverable,
                      boolean catch_all, boolean gibberish, boolean spam) {

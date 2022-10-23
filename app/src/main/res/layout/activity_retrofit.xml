@@ -8,15 +8,15 @@
 
     <TextView
         android:id="@+id/webFeedback"
-        android:layout_width="255dp"
-        android:layout_height="158dp"
+        android:layout_width="257dp"
+        android:layout_height="172dp"
         android:visibility="visible"
 
         app:layout_constraintBottom_toTopOf="@+id/textEntry"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.937" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <EditText
         android:id="@+id/textEntry"
@@ -43,13 +43,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.906" />
+        app:layout_constraintVertical_bias="0.916" />
 
     <ProgressBar
         android:id="@+id/progressBar1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="92dp"
+        android:layout_marginBottom="64dp"
 
         android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/textEntry"
