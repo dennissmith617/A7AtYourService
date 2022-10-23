@@ -97,8 +97,6 @@ public class RetrofitActivity extends AppCompatActivity {
                    Log.d(TAG, "Call failed!" + t.getMessage());
             }
 
-            @Override
-            public void
         });
     }
 }
