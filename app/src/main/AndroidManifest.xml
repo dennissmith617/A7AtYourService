@@ -31,22 +31,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".LaunchWebActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="Launch Web Activity" />
-        <activity
-            android:name=".WebViewActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="Embed Web View" />
-        <activity
-            android:name=".WebServiceActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="Get Data from Web Service" />
-        <activity
-            android:name=".NetworkInfoActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="Network Info" />
     </application>
 
 </manifest>
