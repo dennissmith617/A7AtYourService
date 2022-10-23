@@ -1,6 +1,20 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        debug {
+            storeFile file('/Users/dennissmith/Documents/dennissmithkeystore.jks')
+            storePassword 'password'
+            keyAlias 'key0'
+            keyPassword 'password'
+        }
+        release {
+        storeFile file('/Users/dennissmith/Documents/dennissmithkeystore.jks')
+            storePassword 'password'
+            keyAlias 'key0'
+            keyPassword 'password'
+        }
+    }
     compileSdkVersion 30
     buildToolsVersion "29.0.3"
     defaultConfig {
@@ -10,6 +24,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.t est.runner.AndroidJUnitRunner"
+        signingConfig signingConfigs.release
     }
     buildTypes {
         release {

@@ -7,8 +7,6 @@ public class PostModel {
     private String type;
     private int participants;
 
-    //We can have different name, just use specify which field is to be associated as below
-
     @SerializedName("body")
     private String text;
 
@@ -18,7 +16,6 @@ public class PostModel {
         this.participants = participants;
     }
 
-    // declare
     public String getActivity() {
         return activity;
     }
