@@ -4,12 +4,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.List;
-
-import com.example.a7atyourservice.model.Comment;
 import com.example.a7atyourservice.model.IPlaceholder;
 import com.example.a7atyourservice.model.PostModel;
 import retrofit2.Call;
@@ -24,6 +22,8 @@ public class RetrofitActivity extends AppCompatActivity {
     private Retrofit retrofit;
     private Button retrofitBtn;
     private IPlaceholder api;
+    TextView webFeedback;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +48,6 @@ public class RetrofitActivity extends AppCompatActivity {
 
     }
 
-    // Get requests Example
     private void getActivity(){
         // to execute the call
         Call<PostModel> call = api.getActivityModels();
@@ -62,14 +61,19 @@ public class RetrofitActivity extends AppCompatActivity {
 
                 if(!response.isSuccessful()){
                     Log.d(TAG, "Call failed!" + response.code());
+                    String error = "Call failed!" + response.code();
+                    webFeedback = findViewById(R.id.webFeedback);
+                    webFeedback.setVisibility(View.VISIBLE);
+                    webFeedback.setText(error);
                     return;
                 }
 
-                Log.d(TAG, "Call Successed!");
+                Log.d(TAG, "Call Success!");
                 PostModel postModels = response.body();
                 StringBuffer  str = new StringBuffer();
-                str.append("Activity:: ")
+                str.append("HTTP Response Code:")
                         .append(response.code())
+                        .append("\n")
                         .append("Activity : ")
                         .append(postModels.getActivity())
                         .append("\n")
@@ -82,13 +86,19 @@ public class RetrofitActivity extends AppCompatActivity {
 
 
                     Log.d(TAG, str.toString());
+
+                    webFeedback = findViewById(R.id.webFeedback);
+                    webFeedback.setVisibility(View.VISIBLE);
+                    webFeedback.setText(str);
             }
 
             @Override
             public void onFailure(Call<PostModel> call, Throwable t) {
-                // this gets called when url is wrong and therefore calls can't be made OR processing the request goes wrong.
-                Log.d(TAG, "Call failed!" + t.getMessage());
+                   Log.d(TAG, "Call failed!" + t.getMessage());
             }
+
+            @Override
+            public void
         });
     }
 }
