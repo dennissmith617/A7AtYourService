@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "733474289896",
+    "project_id": "stick-it-neu",
+    "storage_bucket": "stick-it-neu.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:733474289896:android:5112bbdf86ec146db2715d",
+        "android_client_info": {
+          "package_name": "com.example.a7atyourservic"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "733474289896-r7b1g3c60jtfvkvo8e51nr2it67phfc4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxqkSzb86zMKfrq3BjmXnfo7j9rem5Zes"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "733474289896-r7b1g3c60jtfvkvo8e51nr2it67phfc4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:733474289896:android:fdcbc9cfaafd57ceb2715d",
+        "android_client_info": {
+          "package_name": "com.example.a7atyourservice"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "733474289896-r7b1g3c60jtfvkvo8e51nr2it67phfc4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxqkSzb86zMKfrq3BjmXnfo7j9rem5Zes"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "733474289896-r7b1g3c60jtfvkvo8e51nr2it67phfc4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
