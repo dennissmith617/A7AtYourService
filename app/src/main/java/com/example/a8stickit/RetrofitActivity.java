@@ -1,4 +1,4 @@
-package com.example.a7atyourservice;
+package com.example.a8stickit;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -10,8 +10,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.a7atyourservice.model.IPlaceholder;
-import com.example.a7atyourservice.model.PostModel;
+import com.example.a8stickit.model.IPlaceholder;
+import com.example.a8stickit.model.PostModel;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

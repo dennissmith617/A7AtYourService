@@ -1,4 +1,4 @@
-package com.example.a7atyourservice.model;
+package com.example.a8stickit.model;
 
 
 public class PostModel {

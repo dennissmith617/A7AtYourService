@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.a7atyourservice">
+    package="com.example.a8stickit">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -15,9 +15,9 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".RetrofitActivity"
+            android:name="com.example.a8stickit.RetrofitActivity"
             android:exported="true"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName="com.example.a8stickit.MainActivity"
             android:configChanges="orientation|screenSize"/>
 
         <meta-data
@@ -25,7 +25,7 @@
             android:value="false" />
 
         <activity
-            android:name=".MainActivity"
+            android:name="com.example.a8stickit.MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

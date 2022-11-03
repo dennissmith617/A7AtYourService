@@ -1,4 +1,4 @@
-package com.example.a7atyourservice;
+package com.example.a8stickit;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startRetrofitActivity(View view){
-        startActivity(new Intent(MainActivity.this, com.example.a7atyourservice.RetrofitActivity.class));
+        startActivity(new Intent(MainActivity.this, com.example.a8stickit.RetrofitActivity.class));
     }
 }
 

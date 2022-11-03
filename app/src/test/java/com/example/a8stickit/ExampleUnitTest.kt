@@ -1,4 +1,4 @@
-package com.example.a7atyourservice
+package com.example.a8stickit
 
 import org.junit.Test
 

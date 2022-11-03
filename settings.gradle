@@ -6,5 +6,5 @@ pluginManagement {
     }
 }
 
-rootProject.name = "A7AtYourService"
+rootProject.name = "A8StickIt"
 include ':app'

@@ -3,6 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/OneDrive - Northeastern University/NEU 2022/Fall/CS 5520/NUMAD22Fa_Team41/app/src/main/res/layout/activity_main.xml" value="0.32760416666666664" />
+        <entry key="..\:/OneDrive - Northeastern University/NEU 2022/Fall/CS 5520/NUMAD22Fa_Team41/app/src/main/res/layout/activity_retrofit.xml" value="0.32760416666666664" />
+        <entry key="..\:/OneDrive - Northeastern University/NEU 2022/Fall/CS 5520/NUMAD22Fa_Team41/app/src/main/res/layout/content_main.xml" value="0.32760416666666664" />
+        <entry key="..\:/OneDrive - Northeastern University/NEU 2022/Fall/CS 5520/NUMAD22Fa_Team41/app/src/main/res/menu/menu_main.xml" value="0.32760416666666664" />
         <entry key="app/src/main/res/layout/activity_launch_web.xml" value="0.2994791666666667" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.375" />
         <entry key="app/src/main/res/layout/activity_retrofit.xml" value="0.1" />
@@ -18,5 +22,8 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="SuppressKotlinCodeStyleNotification">
+    <option name="disableForAll" value="true" />
   </component>
 </project>
