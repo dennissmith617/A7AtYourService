@@ -17,6 +17,10 @@ public class MainActivity extends AppCompatActivity {
     public void startRetrofitActivity(View view){
         startActivity(new Intent(MainActivity.this, com.example.a7atyourservice.RetrofitActivity.class));
     }
+
+    public void starStickItActivity(View view){
+        startActivity(new Intent(MainActivity.this, com.example.a7atyourservice.StickItActivity.class));
+    }
 }
 
 
