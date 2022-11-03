@@ -25,13 +25,26 @@
 <!--    -->
 
     <TextView
-        android:id="@+id/username"
+        android:id="@+id/username_view"
         android:layout_width="261dp"
         android:layout_height="67dp"
         android:textAppearance="?android:attr/textAppearanceMedium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+
+    <ImageButton
+        android:id="@+id/firebaseImage"
+        android:layout_width="103dp"
+        android:layout_height="126dp"
+        android:layout_marginTop="176dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/smiley"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:transitionName="smiley_face"/>
 
     <Button
         android:id="@+id/about"
@@ -48,7 +61,7 @@
         app:layout_constraintVertical_bias="0.723" />
 
     <EditText
-        android:id="@+id/textEntry"
+        android:id="@+id/username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
@@ -66,7 +79,6 @@
         android:id="@+id/login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="doAddDataToDb"
         android:text="Login"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
