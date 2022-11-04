@@ -122,4 +122,6 @@ public class StickItActivity extends Activity {
         //as opposed to what was shown in lecture,
         //the methods we are using is follow the same pattern.
     }
+
+    //TODO: sticker tap-select, can be it's own activity depending on layout and image size.
 }
