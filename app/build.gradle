@@ -20,12 +20,12 @@ android {
             keyPassword 'password'
         }
     }
-    compileSdkVersion 30
+    compileSdkVersion 31
     buildToolsVersion "29.0.3"
     defaultConfig {
         applicationId "com.example.a8stickit"
         minSdkVersion 26
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.t est.runner.AndroidJUnitRunner"
@@ -54,6 +54,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-auth'
     implementation 'com.google.firebase:firebase-firestore'
+    implementation 'com.google.firebase:firebase-messaging'
 
     // rest of the dependencies
     implementation 'androidx.appcompat:appcompat:1.2.0'
