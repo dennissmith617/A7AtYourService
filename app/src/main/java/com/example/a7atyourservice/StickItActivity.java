@@ -2,11 +2,21 @@ package com.example.a7atyourservice;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -25,6 +35,7 @@ public class StickItActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        createNotificationChannel();
         setContentView(R.layout.activity_stickit);
 
         // Connect with firebase
@@ -68,5 +79,47 @@ public class StickItActivity extends Activity {
 
         });
 
+    }
+
+    //TODO: screen rotation support
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+    }
+
+    //TODO: screen rotation support
+    @Override
+    public void onRestoreInstanceState(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
+        super.onRestoreInstanceState(savedInstanceState, persistentState);
+    }
+
+    //TODO: notification channel registration
+    //largely copied from android developer site
+    public void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = getString(R.string.channel_name);
+            String description = getString(R.string.channel_description);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
+
+    //TODO: implement notification sending, move this implementation to database listener, or leave it here
+    //Yufeng: I'm thinking about including the sticker image in the notification. Need some predefined images in res.
+    public void sendNotification(View view) {
+        //TODO: customize intent based on notification options
+        PendingIntent notificationIntent = PendingIntent.getActivity(this, (int)System.currentTimeMillis(),
+                new Intent(this, StickItActivity.class), 0);
+
+        //TODO: create and send notification, see https://developer.android.com/develop/ui/views/notifications/build-notification
+        //TODO: to use additional styling with images, see https://developer.android.com/develop/ui/views/notifications#Templates
+        //Note that the dev website uses Compat classes for notification and manager,
+        //as opposed to what was shown in lecture,
+        //the methods we are using is follow the same pattern.
     }
 }
