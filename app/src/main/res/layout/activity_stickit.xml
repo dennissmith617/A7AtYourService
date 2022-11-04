@@ -33,18 +33,29 @@
         app:layout_constraintStart_toStartOf="parent" />
 
 
+    <TextView
+        android:id="@+id/friends_list"
+        android:layout_width="261dp"
+        android:layout_height="67dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="132dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/username_view" />
+
     <ImageButton
         android:id="@+id/firebaseImage"
         android:layout_width="103dp"
         android:layout_height="126dp"
-        android:layout_marginTop="176dp"
+        android:layout_marginTop="244dp"
         android:scaleType="fitXY"
         android:src="@drawable/smiley"
+        android:transitionName="smiley_face"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.196"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:transitionName="smiley_face"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/about"
@@ -55,10 +66,9 @@
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.723" />
+        app:layout_constraintVertical_bias="0.935" />
 
     <EditText
         android:id="@+id/username"
@@ -75,6 +85,22 @@
         android:inputType="text" />
 
 
+    <EditText
+        android:id="@+id/recipient"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_marginBottom="8dp"
+        android:visibility="invisible"
+        android:autofillHints=""
+        android:hint="Friend's username here"
+        android:inputType="text"
+        android:minHeight="48dp"
+        app:layout_constraintBottom_toTopOf="@+id/login"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
     <Button
         android:id="@+id/login"
         android:layout_width="match_parent"
@@ -82,7 +108,7 @@
         android:text="Login"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.563"
-        tools:layout_editor_absoluteX="53dp" />
+        app:layout_constraintVertical_bias="0.85"
+        tools:layout_editor_absoluteX="0dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
