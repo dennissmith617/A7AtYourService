@@ -1,6 +1,7 @@
 package com.example.a7atyourservice;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -10,16 +11,18 @@ import java.util.Date;
 public class User {
 
     public String username;
-    public String stickersSent;
+    public int stickersSent;
+    public int stickersRecieved;
     public String dateSent;
 
 
     public User() {
     }
 
-    public User(String username, String stickersSent) {
+    public User(String username, int stickersSent, int stickersRecieved) {
         this.username = username;
         this.stickersSent = stickersSent;
+        this.stickersRecieved = stickersRecieved;
         this.dateSent = date();
     }
 
