@@ -39,6 +39,7 @@ public class StickItActivity extends AppCompatActivity {
 
     private DatabaseReference mDatabase;
     private ImageButton smiley;
+    private ImageButton party;
     private Button loginButton;
     private Button sendButton;
     private EditText loginText;
@@ -47,6 +48,8 @@ public class StickItActivity extends AppCompatActivity {
     private EditText recipientText;
 
     private String selectedSticker;
+    private String username;
+    private String currentFriends;
 
 
     @SuppressLint("RestrictedApi")
@@ -65,9 +68,11 @@ public class StickItActivity extends AppCompatActivity {
         loginButton = findViewById(R.id.login);
         sendButton = findViewById(R.id.send_button);
         smiley = findViewById(R.id.smiley_sticker);
+        party = findViewById(R.id.party_sticker);
         usernameView = findViewById(R.id.username_view);
         friendsList = findViewById(R.id.friends_list);
         recipientText = findViewById(R.id.recipient);
+        currentFriends = new String();
 
 
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -85,11 +90,22 @@ public class StickItActivity extends AppCompatActivity {
             }
         });
 
+        party.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectSticker(party);
+            }
+        });
+
 
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sendSticker(usernameView.getText().toString(), recipientText.getText().toString());
+
+                //TODO: need a way to check existing user,
+                // so that we prevent adding to schema with non-existing username
+                // also need to place value increments in transactions.
+                sendSticker(username, recipientText.getText().toString());
             }
         });
 
@@ -141,7 +157,7 @@ public class StickItActivity extends AppCompatActivity {
 
         // increment
         DatabaseReference curr_user_sent_count= curr_user.child("stickersSent");
-        DatabaseReference to_user_sticker_count = to_user.child("stickersRecieved");
+        DatabaseReference to_user_sticker_count = to_user.child("stickersReceived");
 
 
         curr_user_sent_count.setValue(ServerValue.increment(1));
@@ -155,11 +171,11 @@ public class StickItActivity extends AppCompatActivity {
         // Start off with no stickers
         user = new User(username, 0, 0);
         Task t1 = mDatabase.child("users").child(user.username).setValue(user);
-
-        if(!t1.isSuccessful()){
-            Toast.makeText(getApplicationContext(),"Unable to login!",Toast.LENGTH_SHORT).show();
-        }
-        String displayText = "username: " + loginText.getText().toString();
+//        if(!t1.isSuccessful()){
+//            Toast.makeText(getApplicationContext(),"Unable to login!",Toast.LENGTH_SHORT).show();
+//        }
+        this.username = username;
+        String displayText = "username: " + this.username;
 
         // Hide Login Info
         loginButton.setVisibility(View.INVISIBLE);
@@ -168,14 +184,16 @@ public class StickItActivity extends AppCompatActivity {
         // Show sticker "view"
         usernameView.setText(displayText);
         smiley.setVisibility(View.VISIBLE);
+        party.setVisibility(View.VISIBLE);
+        friendsList.setVisibility(View.VISIBLE);
         recipientText.setVisibility(View.VISIBLE);
         sendButton.setVisibility(View.VISIBLE);
     }
 
     public void displayFriends(DataSnapshot dataSnapshot) {
         User user = dataSnapshot.getValue(User.class);
-        String current_friends = friendsList.getText().toString();
-        String new_friends_list = "Friends: " + current_friends + user.username + ", ";
+        currentFriends = new StringBuilder(currentFriends).append(", ").append(user.username).toString();
+        String new_friends_list = "Friends: " + currentFriends;
         friendsList.setText(new_friends_list);
     }
 
@@ -196,11 +214,10 @@ public class StickItActivity extends AppCompatActivity {
 
     public void sendNotification() {
 
-
         // Sticker notification
         String channelId = getString(R.string.channel_id);
         NotificationCompat.Builder notifyBuild = new NotificationCompat.Builder(this, channelId)
-                .setSmallIcon(R.drawable.party)
+                .setSmallIcon(R.drawable.smiley)
                 .setContentTitle("New sticker alert!")
                 .setContentText("Subject")
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
