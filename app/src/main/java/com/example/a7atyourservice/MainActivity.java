@@ -21,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
     public void starStickItActivity(View view){
         startActivity(new Intent(MainActivity.this, com.example.a7atyourservice.StickItActivity.class));
     }
+
+    //TODO: add "About" button that shows every person in group and group name
 }
 
 
