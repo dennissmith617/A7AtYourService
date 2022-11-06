@@ -10,10 +10,15 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +35,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.example.a7atyourservice.User;
 import com.google.firebase.database.ServerValue;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -41,9 +47,11 @@ public class StickItActivity extends AppCompatActivity {
     private ImageButton smiley;
     private Button loginButton;
     private Button sendButton;
+    private Button historyButton;
     private EditText loginText;
     private TextView usernameView;
     private TextView friendsList;
+    private TextView stickerSentTv;
     private EditText recipientText;
 
     private String selectedSticker;
@@ -64,10 +72,13 @@ public class StickItActivity extends AppCompatActivity {
         loginText = (EditText) findViewById(R.id.username);
         loginButton = findViewById(R.id.login);
         sendButton = findViewById(R.id.send_button);
+        historyButton = findViewById(R.id.history_button);
+        historyButton.setVisibility(View.INVISIBLE);
         smiley = findViewById(R.id.smiley_sticker);
         usernameView = findViewById(R.id.username_view);
         friendsList = findViewById(R.id.friends_list);
         recipientText = findViewById(R.id.recipient);
+        stickerSentTv = findViewById(R.id.stickerSentTv);
 
 
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -92,6 +103,46 @@ public class StickItActivity extends AppCompatActivity {
                 sendSticker(usernameView.getText().toString(), recipientText.getText().toString());
             }
         });
+
+        // Show sticker histories
+        historyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LayoutInflater inflater = (LayoutInflater)
+                        getSystemService(LAYOUT_INFLATER_SERVICE);
+                View popupView = inflater.inflate(R.layout.popup_window, null);
+
+                int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+                int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+                boolean focusable = true; // lets taps outside the popup also dismiss it
+                final PopupWindow popupWindow = new PopupWindow(popupView, width, height, true);
+
+                //retrieve data fromDB
+                mDatabase.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        String stickerSentTxt = dataSnapshot.child("stickerSent").getValue().toString();
+                        stickerSentTv.setText(stickerSentTxt);
+                        Log.d(TAG, "Sticker sent: " + stickerSentTv);
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError error) {
+                        Log.w(TAG, "Failed to read value.", error.toException());
+                    }
+                });
+
+                popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+                //dismiss
+                popupView.setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        popupWindow.dismiss();
+                        return true;
+                    }
+                });
+            }
+        });
+
 
         // Update the friends list in realtime
         mDatabase.child("users").addChildEventListener(
@@ -170,14 +221,16 @@ public class StickItActivity extends AppCompatActivity {
         smiley.setVisibility(View.VISIBLE);
         recipientText.setVisibility(View.VISIBLE);
         sendButton.setVisibility(View.VISIBLE);
+        historyButton.setVisibility(View.VISIBLE);
     }
 
     public void displayFriends(DataSnapshot dataSnapshot) {
         User user = dataSnapshot.getValue(User.class);
         String current_friends = friendsList.getText().toString();
-        String new_friends_list = "Friends: " + current_friends + user.username + ", ";
-        friendsList.setText(new_friends_list);
+        String new_friends_list = current_friends + user.username + ", ";
+        friendsList.setText("Friends: " + new_friends_list);
     }
+
 
     // code here from -> https://developer.android.com/develop/ui/views/notifications/build-notification
     private void createNotificationChannel() {
