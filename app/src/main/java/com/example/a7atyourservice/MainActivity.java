@@ -22,7 +22,9 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(MainActivity.this, com.example.a7atyourservice.StickItActivity.class));
     }
 
-    //TODO: add "About" button that shows every person in group and group name
+    public void openAboutScreen(View view) {
+        startActivity(new Intent(MainActivity.this, com.example.a7atyourservice.InfoScreen.class));
+    }
 }
 
 
