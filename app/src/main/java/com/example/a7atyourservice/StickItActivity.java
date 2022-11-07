@@ -162,8 +162,8 @@ public class StickItActivity extends AppCompatActivity {
 
                     @Override
                     public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                        sendNotification();
-//                        displaySentTimes(dataSnapshot);
+//                        sendNotification();
+                        displaySentTimes(dataSnapshot);
                         Log.v(TAG, "onChildChanged: " + dataSnapshot.getValue().toString());
                     }
 
@@ -218,7 +218,7 @@ public class StickItActivity extends AppCompatActivity {
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if (!dataSnapshot.child("users").exists()){
+                if (!dataSnapshot.child("users").child(username).exists()){
                     com.example.a7atyourservice.User user;
                     // Start off with no stickers
                     user = new com.example.a7atyourservice.User(username, 0, 0);
