@@ -130,7 +130,7 @@ public class StickItActivity extends AppCompatActivity {
 
                     @Override
                     public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                        displaySentTimes(dataSnapshot);
+                        //displaySentTimes(dataSnapshot);
                         sendNotification();
                         Log.v(TAG, "onChildChanged: " + dataSnapshot.getValue().toString());
                     }
