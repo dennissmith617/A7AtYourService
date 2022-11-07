@@ -184,7 +184,7 @@ public class StickItActivity extends AppCompatActivity {
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if (!dataSnapshot.child("users").exists()){
+                if (!dataSnapshot.child("users").child(username).exists()){
                     com.example.a7atyourservice.User user;
                     // Start off with no stickers
                     user = new com.example.a7atyourservice.User(username, 0, 0);
@@ -210,6 +210,7 @@ public class StickItActivity extends AppCompatActivity {
 
         // Show sticker "view"
         usernameView.setText(displayText);
+        friendsList.setVisibility(View.VISIBLE);
         smiley.setVisibility(View.VISIBLE);
         party.setVisibility(View.VISIBLE);
         recipientText.setVisibility(View.VISIBLE);
