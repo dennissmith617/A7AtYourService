@@ -1,18 +1,19 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     signingConfigs {
         debug {
-            storeFile file('/Users/dennissmith/Documents/dennissmithkeystore.jks')
-            storePassword 'password'
-            keyAlias 'key0'
-            keyPassword 'password'
+            storeFile file('D:\\OneDrive - Northeastern University\\NEU 2022\\Fall\\CS 5520\\keystore.jks')
+            storePassword 'gg123456'
+            keyAlias 'key1'
+            keyPassword 'gg123456'
         }
         release {
-        storeFile file('/Users/dennissmith/Documents/dennissmithkeystore.jks')
-            storePassword 'password'
-            keyAlias 'key0'
-            keyPassword 'password'
+            storeFile file('D:\\OneDrive - Northeastern University\\NEU 2022\\Fall\\CS 5520\\keystore.jks')
+            storePassword 'gg123456'
+            keyAlias 'key1'
+            keyPassword 'gg123456'
         }
     }
     compileSdkVersion 30
@@ -53,4 +54,8 @@ dependencies {
     testImplementation 'junit:junit:4.13.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    implementation platform('com.google.firebase:firebase-bom:31.0.2')
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.firebase:firebase-database:19.6.0'
+    implementation 'com.google.firebase:firebase-messaging:21.0.1'
 }

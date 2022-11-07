@@ -15,7 +15,18 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".StickItActivity"
+            android:exported="true"
+            android:parentActivityName=".MainActivity"
+            android:configChanges="orientation|screenSize"
+            />
+        <activity
             android:name=".RetrofitActivity"
+            android:exported="true"
+            android:parentActivityName=".MainActivity"
+            android:configChanges="orientation|screenSize"/>
+        <activity
+            android:name=".InfoScreen"
             android:exported="true"
             android:parentActivityName=".MainActivity"
             android:configChanges="orientation|screenSize"/>
