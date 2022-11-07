@@ -25,6 +25,11 @@
             android:exported="true"
             android:parentActivityName=".MainActivity"
             android:configChanges="orientation|screenSize"/>
+        <activity
+            android:name=".InfoScreen"
+            android:exported="true"
+            android:parentActivityName=".MainActivity"
+            android:configChanges="orientation|screenSize"/>
 
         <meta-data
             android:name="android.webkit.WebView.EnableSafeBrowsing"

@@ -21,6 +21,10 @@ public class MainActivity extends AppCompatActivity {
     public void starStickItActivity(View view){
         startActivity(new Intent(MainActivity.this, com.example.a7atyourservice.StickItActivity.class));
     }
+
+    public void openAboutScreen(View view) {
+        startActivity(new Intent(MainActivity.this, com.example.a7atyourservice.InfoScreen.class));
+    }
 }
 
 
