@@ -3,12 +3,6 @@ apply plugin: 'com.google.gms.google-services'
 
 android {
     signingConfigs {
-        debug {
-            storeFile file('D:\\OneDrive - Northeastern University\\NEU 2022\\Fall\\CS 5520\\keystore.jks')
-            storePassword 'gg123456'
-            keyAlias 'key1'
-            keyPassword 'gg123456'
-        }
         release {
             storeFile file('D:\\OneDrive - Northeastern University\\NEU 2022\\Fall\\CS 5520\\keystore.jks')
             storePassword 'gg123456'

@@ -32,4 +32,8 @@ public class User {
         return ft.format(dNow);
     }
 
+    public String getName(){
+        return this.username;
+    }
+
 }

@@ -30,6 +30,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.example.a7atyourservice.User;
 import com.google.firebase.database.ServerValue;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -50,6 +51,10 @@ public class StickItActivity extends AppCompatActivity {
     private String selectedSticker;
     private String username;
     private String currentFriends;
+
+    private TextView smileySent;
+    private TextView partySent;
+    private Button historyButton;
 
 
     @SuppressLint("RestrictedApi")
@@ -73,6 +78,10 @@ public class StickItActivity extends AppCompatActivity {
         friendsList = findViewById(R.id.friends_list);
         recipientText = findViewById(R.id.recipient);
         currentFriends = new String();
+
+        historyButton = findViewById(R.id.history_button);
+        smileySent = findViewById(R.id.smiley_numSent);
+        partySent = findViewById(R.id.party_numSent);
 
 
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -105,7 +114,7 @@ public class StickItActivity extends AppCompatActivity {
                 //TODO: need a way to check existing user,
                 // so that we prevent adding to schema with non-existing username
                 // also need to place value increments in transactions.
-                sendSticker(username, recipientText.getText().toString());
+                sendSticker(username, recipientText.getText().toString(), selectedSticker);
             }
         });
 
@@ -121,6 +130,7 @@ public class StickItActivity extends AppCompatActivity {
 
                     @Override
                     public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                        displaySentTimes(dataSnapshot);
                         sendNotification();
                         Log.v(TAG, "onChildChanged: " + dataSnapshot.getValue().toString());
                     }
@@ -151,31 +161,48 @@ public class StickItActivity extends AppCompatActivity {
         sticker.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
     }
 
-    public void sendSticker(String curr_username, String friend_username) {
+    public void sendSticker(String curr_username, String friend_username, String sticker_name) {
         DatabaseReference curr_user = mDatabase.child("users").child(curr_username);
         DatabaseReference to_user = mDatabase.child("users").child(friend_username);
+        DatabaseReference sticker_sent = curr_user.child(sticker_name);
 
         // increment
         DatabaseReference curr_user_sent_count= curr_user.child("stickersSent");
-        DatabaseReference to_user_sticker_count = to_user.child("stickersReceived");
-
+        DatabaseReference to_user_sticker_count = to_user.child("stickersRecieved");
+        DatabaseReference sticker_sent_count = sticker_sent.child("NumbersSent");
 
         curr_user_sent_count.setValue(ServerValue.increment(1));
         to_user_sticker_count.setValue(ServerValue.increment(1));
+        sticker_sent_count.setValue(ServerValue.increment(1));
+
     }
 
     // Add Users to DB
     public void addUser(String username) {
+        String displayText;
+        // check if the user already exists, if not, create a new user profile
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (!dataSnapshot.child("users").exists()){
+                    com.example.a7atyourservice.User user;
+                    // Start off with no stickers
+                    user = new com.example.a7atyourservice.User(username, 0, 0);
+                    Task t1 = mDatabase.child("users").child(user.username).setValue(user);
 
-        User user;
-        // Start off with no stickers
-        user = new User(username, 0, 0);
-        Task t1 = mDatabase.child("users").child(user.username).setValue(user);
-//        if(!t1.isSuccessful()){
-//            Toast.makeText(getApplicationContext(),"Unable to login!",Toast.LENGTH_SHORT).show();
-//        }
-        this.username = username;
-        String displayText = "username: " + this.username;
+                    if (!t1.isSuccessful()) {
+                        Toast.makeText(getApplicationContext(), "Unable to login!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+
+            }
+        });
+
+        displayText = "username: " + loginText.getText().toString();
 
         // Hide Login Info
         loginButton.setVisibility(View.INVISIBLE);
@@ -185,16 +212,30 @@ public class StickItActivity extends AppCompatActivity {
         usernameView.setText(displayText);
         smiley.setVisibility(View.VISIBLE);
         party.setVisibility(View.VISIBLE);
-        friendsList.setVisibility(View.VISIBLE);
         recipientText.setVisibility(View.VISIBLE);
         sendButton.setVisibility(View.VISIBLE);
+        historyButton.setVisibility(View.VISIBLE);
+        smileySent.setVisibility(View.VISIBLE);
+        partySent.setVisibility(View.VISIBLE);
     }
+
 
     public void displayFriends(DataSnapshot dataSnapshot) {
         User user = dataSnapshot.getValue(User.class);
         currentFriends = new StringBuilder(currentFriends).append(", ").append(user.username).toString();
         String new_friends_list = "Friends: " + currentFriends;
         friendsList.setText(new_friends_list);
+    }
+
+
+    // show how many time each sticker has been used
+    public void displaySentTimes(DataSnapshot dataSnapshot) {
+        com.example.a7atyourservice.User user = dataSnapshot.getValue(com.example.a7atyourservice.User.class);
+        String name = user.getName();
+        String SmileySentTimes = dataSnapshot.child("users").child(name)
+                .child("smiley_sticker").child("NumbersSent").getValue().toString();
+        smileySent.setText("sent: " + SmileySentTimes);
+
     }
 
     // code here from -> https://developer.android.com/develop/ui/views/notifications/build-notification
