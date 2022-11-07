@@ -1,8 +1,6 @@
 package com.example.a7atyourservice;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -30,8 +28,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 
@@ -41,11 +37,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.example.a7atyourservice.User;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
 
 public class StickItActivity extends AppCompatActivity {
 
@@ -63,7 +56,7 @@ public class StickItActivity extends AppCompatActivity {
     private TextView stickerSentTv;
     private EditText recipientText;
     private String selectedSticker;
-    private boolean CheckExists = false;
+    private boolean CheckExists;
 
 
     @SuppressLint("RestrictedApi")
@@ -189,7 +182,7 @@ public class StickItActivity extends AppCompatActivity {
     public void sendSticker(String curr_username, String friend_username, String sticker_name) {
         DatabaseReference curr_user = mDatabase.child("users").child(curr_username);
         DatabaseReference to_user = mDatabase.child("users").child(friend_username);
-        DatabaseReference sticker_sent = mDatabase.child("users").child(friend_username).child(sticker_name);
+        DatabaseReference sticker_sent = curr_user.child(sticker_name);
 
         // increment
         DatabaseReference curr_user_sent_count= curr_user.child("stickersSent");
@@ -204,16 +197,31 @@ public class StickItActivity extends AppCompatActivity {
 
     // Add Users to DB
     public void addUser(String username) {
-        User user;
-        // Start off with no stickers
-        user = new User(username, 0, 0);
-        Task t1 = mDatabase.child("users").child(user.username).setValue(user);
+        String displayText;
+        // check if the user already exist
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // if not exist - create a new user profile
+                if (!dataSnapshot.child("users").exists()){
+                    com.example.a7atyourservice.User user;
+                    // Start off with no stickers
+                    user = new com.example.a7atyourservice.User(username, 0, 0);
+                    Task t1 = mDatabase.child("users").child(user.username).setValue(user);
 
-        if(!t1.isSuccessful()){
-            Toast.makeText(getApplicationContext(),"Unable to login!",Toast.LENGTH_SHORT).show();
-        }
-        String displayText = "username: " + loginText.getText().toString();
+                    if (!t1.isSuccessful()) {
+                        Toast.makeText(getApplicationContext(), "Unable to login!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
 
+            @Override
+            public void onCancelled(DatabaseError error) {
+
+            }
+        });
+
+        displayText = "username: " + loginText.getText().toString();
 
         // Hide Login Info
         loginButton.setVisibility(View.INVISIBLE);
@@ -228,28 +236,6 @@ public class StickItActivity extends AppCompatActivity {
         smileySent.setVisibility(View.VISIBLE);
     }
 
-    // to check if the user already exist
-    private boolean userExist(String nameToCheck) {
-        mDatabase.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Iterable<DataSnapshot> userChildren = dataSnapshot.getChildren();
-
-                for (DataSnapshot user : userChildren) {
-                    User u = user.getValue(User.class);
-                    if (u.username.equals(nameToCheck)) {
-                        CheckExists = true;
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-        return CheckExists;
-    }
 
     public void displayFriends(DataSnapshot dataSnapshot) {
         User user = dataSnapshot.getValue(User.class);
