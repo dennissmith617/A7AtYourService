@@ -191,10 +191,10 @@ public class StickItActivity extends AppCompatActivity {
     private void createNotificationChannel() {
         // Create the NotificationChannel
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = getString(R.string.channel_name);
-            String description = getString(R.string.channel_description);
+            CharSequence name = "New Sticker!";
+            String description = "Channel for notifications recieving new sticker";
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel(getString(R.string.channel_id), name, importance);
+            NotificationChannel channel = new NotificationChannel("Sticker_Notifications", name, importance);
             channel.setDescription(description);
             // Register the channel with the system
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
@@ -206,7 +206,7 @@ public class StickItActivity extends AppCompatActivity {
 
 
         // Sticker notification
-        String channelId = getString(R.string.channel_id);
+        String channelId = "Sticker_Notifications";
         NotificationCompat.Builder notifyBuild = new NotificationCompat.Builder(this, channelId)
                 .setSmallIcon(R.drawable.party)
                 .setContentTitle("New sticker alert!")
