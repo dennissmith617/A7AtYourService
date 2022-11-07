@@ -46,17 +46,18 @@ public class StickItActivity extends AppCompatActivity {
 
     private DatabaseReference mDatabase;
     private ImageButton smiley;
-    private TextView smileySent;
     private Button loginButton;
     private Button sendButton;
-    private Button historyButton;
     private EditText loginText;
     private TextView usernameView;
     private TextView friendsList;
-    private TextView stickerSentTv;
+
     private EditText recipientText;
     private String selectedSticker;
-    private boolean CheckExists;
+
+    private TextView smileySent;
+    private TextView stickerSentTv;
+    private Button historyButton;
 
 
     @SuppressLint("RestrictedApi")
@@ -75,13 +76,15 @@ public class StickItActivity extends AppCompatActivity {
         loginText = (EditText) findViewById(R.id.username);
         loginButton = findViewById(R.id.login);
         sendButton = findViewById(R.id.send_button);
-        historyButton = findViewById(R.id.history_button);
         smiley = findViewById(R.id.smiley_sticker);
-        smileySent = findViewById(R.id.smiley_numSent);
+
         usernameView = findViewById(R.id.username_view);
         friendsList = findViewById(R.id.friends_list);
         recipientText = findViewById(R.id.recipient);
+
+        historyButton = findViewById(R.id.history_button);
         stickerSentTv = findViewById(R.id.stickerSentTv);
+        smileySent = findViewById(R.id.smiley_numSent);
 
 
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -107,6 +110,7 @@ public class StickItActivity extends AppCompatActivity {
                         selectedSticker);
             }
         });
+
 
         // Show sticker histories
         historyButton.setOnClickListener(new View.OnClickListener() {
@@ -179,6 +183,7 @@ public class StickItActivity extends AppCompatActivity {
         sticker.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
     }
 
+
     public void sendSticker(String curr_username, String friend_username, String sticker_name) {
         DatabaseReference curr_user = mDatabase.child("users").child(curr_username);
         DatabaseReference to_user = mDatabase.child("users").child(friend_username);
@@ -195,9 +200,11 @@ public class StickItActivity extends AppCompatActivity {
 
     }
 
+
     // Add Users to DB
     public void addUser(String username) {
         String displayText;
+        // check if the user already exists, if not, create a new user profile
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -242,6 +249,8 @@ public class StickItActivity extends AppCompatActivity {
         friendsList.setText("Friends: " + new_friends_list);
     }
 
+
+    // show how many time each sticker has been used
     public void displaySentTimes(DataSnapshot dataSnapshot) {
         com.example.a7atyourservice.User user = dataSnapshot.getValue(com.example.a7atyourservice.User.class);
         String name = user.getName();
