@@ -3,7 +3,6 @@ package com.example.a7atyourservice;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by aniru on 2/18/2017.

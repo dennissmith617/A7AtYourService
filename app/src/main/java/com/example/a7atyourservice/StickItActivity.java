@@ -9,36 +9,30 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
-import androidx.annotation.Nullable;
-
-
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.example.a7atyourservice.User;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class StickItActivity extends AppCompatActivity {
 
@@ -46,17 +40,20 @@ public class StickItActivity extends AppCompatActivity {
 
     private DatabaseReference mDatabase;
     private ImageButton smiley;
+    private ImageButton party;
     private Button loginButton;
     private Button sendButton;
     private EditText loginText;
     private TextView usernameView;
     private TextView friendsList;
-
     private EditText recipientText;
+
     private String selectedSticker;
+    private String username;
+    private String currentFriends;
 
     private TextView smileySent;
-    private TextView stickerSentTv;
+    private TextView partySent;
     private Button historyButton;
 
 
@@ -64,7 +61,6 @@ public class StickItActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        createNotificationChannel();
         setContentView(R.layout.activity_stickit);
 
         // Connect with firebase
@@ -77,14 +73,15 @@ public class StickItActivity extends AppCompatActivity {
         loginButton = findViewById(R.id.login);
         sendButton = findViewById(R.id.send_button);
         smiley = findViewById(R.id.smiley_sticker);
-
+        party = findViewById(R.id.party_sticker);
         usernameView = findViewById(R.id.username_view);
         friendsList = findViewById(R.id.friends_list);
         recipientText = findViewById(R.id.recipient);
+        currentFriends = new String();
 
         historyButton = findViewById(R.id.history_button);
-        stickerSentTv = findViewById(R.id.stickerSentTv);
         smileySent = findViewById(R.id.smiley_numSent);
+        partySent = findViewById(R.id.party_numSent);
 
 
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -102,41 +99,24 @@ public class StickItActivity extends AppCompatActivity {
             }
         });
 
+        party.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectSticker(party);
+            }
+        });
+
 
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sendSticker(usernameView.getText().toString(), recipientText.getText().toString(),
-                        selectedSticker);
+
+                //TODO: need a way to check existing user,
+                // so that we prevent adding to schema with non-existing username
+                // also need to place value increments in transactions.
+                sendSticker(username, recipientText.getText().toString(), selectedSticker);
             }
         });
-
-
-        // Show sticker histories
-        historyButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                LayoutInflater inflater = (LayoutInflater)
-                        getSystemService(LAYOUT_INFLATER_SERVICE);
-                View popupView = inflater.inflate(R.layout.popup_window, null);
-
-                int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-                int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-                boolean focusable = true; // lets taps outside the popup also dismiss it
-                final PopupWindow popupWindow = new PopupWindow(popupView, width, height, true);
-
-                popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
-                //dismiss
-                popupView.setOnTouchListener(new View.OnTouchListener() {
-                    @Override
-                    public boolean onTouch(View v, MotionEvent event) {
-                        popupWindow.dismiss();
-                        return true;
-                    }
-                });
-            }
-        });
-
 
         // Update the friends list in realtime
         mDatabase.child("users").addChildEventListener(
@@ -173,16 +153,13 @@ public class StickItActivity extends AppCompatActivity {
                     }
                 }
         );
-
     }
-
 
     public void selectSticker(ImageButton sticker) {
         selectedSticker = sticker.getTransitionName();
         // selected sticker is tinted red
         sticker.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
     }
-
 
     public void sendSticker(String curr_username, String friend_username, String sticker_name) {
         DatabaseReference curr_user = mDatabase.child("users").child(curr_username);
@@ -199,7 +176,6 @@ public class StickItActivity extends AppCompatActivity {
         sticker_sent_count.setValue(ServerValue.increment(1));
 
     }
-
 
     // Add Users to DB
     public void addUser(String username) {
@@ -235,18 +211,20 @@ public class StickItActivity extends AppCompatActivity {
         // Show sticker "view"
         usernameView.setText(displayText);
         smiley.setVisibility(View.VISIBLE);
+        party.setVisibility(View.VISIBLE);
         recipientText.setVisibility(View.VISIBLE);
         sendButton.setVisibility(View.VISIBLE);
         historyButton.setVisibility(View.VISIBLE);
         smileySent.setVisibility(View.VISIBLE);
+        partySent.setVisibility(View.VISIBLE);
     }
 
 
     public void displayFriends(DataSnapshot dataSnapshot) {
-        com.example.a7atyourservice.User user = dataSnapshot.getValue(com.example.a7atyourservice.User.class);
-        String current_friends = friendsList.getText().toString();
-        String new_friends_list = current_friends + user.username + ", ";
-        friendsList.setText("Friends: " + new_friends_list);
+        User user = dataSnapshot.getValue(User.class);
+        currentFriends = new StringBuilder(currentFriends).append(", ").append(user.username).toString();
+        String new_friends_list = "Friends: " + currentFriends;
+        friendsList.setText(new_friends_list);
     }
 
 
@@ -259,7 +237,6 @@ public class StickItActivity extends AppCompatActivity {
         smileySent.setText("sent: " + SmileySentTimes);
 
     }
-
 
     // code here from -> https://developer.android.com/develop/ui/views/notifications/build-notification
     private void createNotificationChannel() {
@@ -278,11 +255,10 @@ public class StickItActivity extends AppCompatActivity {
 
     public void sendNotification() {
 
-
         // Sticker notification
         String channelId = getString(R.string.channel_id);
         NotificationCompat.Builder notifyBuild = new NotificationCompat.Builder(this, channelId)
-                .setSmallIcon(R.drawable.party)
+                .setSmallIcon(R.drawable.smiley)
                 .setContentTitle("New sticker alert!")
                 .setContentText("Subject")
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
@@ -294,33 +270,4 @@ public class StickItActivity extends AppCompatActivity {
         notificationManager.notify(0, notifyBuild.build());
 
     }
-
-    //TODO: screen rotation support
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState) {
-        super.onSaveInstanceState(outState, outPersistentState);
-    }
-
-    //TODO: screen rotation support
-    @Override
-    public void onRestoreInstanceState(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-        super.onRestoreInstanceState(savedInstanceState, persistentState);
-    }
-
-
-    //TODO: implement notification sending, move this implementation to database listener, or leave it here
-    //Yufeng: I'm thinking about including the sticker image in the notification. Need some predefined images in res.
-    public void sendNotification(View view) {
-        //TODO: customize intent based on notification options
-        PendingIntent notificationIntent = PendingIntent.getActivity(this, (int)System.currentTimeMillis(),
-                new Intent(this, StickItActivity.class), 0);
-
-        //TODO: create and send notification, see https://developer.android.com/develop/ui/views/notifications/build-notification
-        //TODO: to use additional styling with images, see https://developer.android.com/develop/ui/views/notifications#Templates
-        //Note that the dev website uses Compat classes for notification and manager,
-        //as opposed to what was shown in lecture,
-        //the methods we are using is follow the same pattern.
-    }
-
-    //TODO: sticker tap-select, can be its own activity depending on layout and image size.
 }
