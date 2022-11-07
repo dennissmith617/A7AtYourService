@@ -10,10 +10,15 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -114,9 +119,36 @@ public class StickItActivity extends AppCompatActivity {
                 //TODO: need a way to check existing user,
                 // so that we prevent adding to schema with non-existing username
                 // also need to place value increments in transactions.
-                sendSticker(username, recipientText.getText().toString(), selectedSticker);
+                sendSticker(loginText.getText().toString(), recipientText.getText().toString(), selectedSticker);
             }
         });
+
+
+        // Show sticker histories
+        historyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LayoutInflater inflater = (LayoutInflater)
+                        getSystemService(LAYOUT_INFLATER_SERVICE);
+                View popupView = inflater.inflate(R.layout.popup_window, null);
+
+                int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+                int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+                boolean focusable = true; // lets taps outside the popup also dismiss it
+                final PopupWindow popupWindow = new PopupWindow(popupView, width, height, true);
+
+                popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+                //dismiss
+                popupView.setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        popupWindow.dismiss();
+                        return true;
+                    }
+                });
+            }
+        });
+
 
         // Update the friends list in realtime
         mDatabase.child("users").addChildEventListener(
@@ -130,8 +162,8 @@ public class StickItActivity extends AppCompatActivity {
 
                     @Override
                     public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                        displaySentTimes(dataSnapshot);
                         sendNotification();
+//                        displaySentTimes(dataSnapshot);
                         Log.v(TAG, "onChildChanged: " + dataSnapshot.getValue().toString());
                     }
 
@@ -158,13 +190,15 @@ public class StickItActivity extends AppCompatActivity {
     public void selectSticker(ImageButton sticker) {
         selectedSticker = sticker.getTransitionName();
         // selected sticker is tinted red
+        smiley.setBackgroundTintList(ColorStateList.valueOf(Color.WHITE));
+        party.setBackgroundTintList(ColorStateList.valueOf(Color.WHITE));
         sticker.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
     }
 
     public void sendSticker(String curr_username, String friend_username, String sticker_name) {
         DatabaseReference curr_user = mDatabase.child("users").child(curr_username);
         DatabaseReference to_user = mDatabase.child("users").child(friend_username);
-        DatabaseReference sticker_sent = curr_user.child(sticker_name);
+        DatabaseReference sticker_sent = mDatabase.child("users").child(curr_username).child(sticker_name);
 
         // increment
         DatabaseReference curr_user_sent_count= curr_user.child("stickersSent");
@@ -210,6 +244,7 @@ public class StickItActivity extends AppCompatActivity {
 
         // Show sticker "view"
         usernameView.setText(displayText);
+        friendsList.setVisibility(View.VISIBLE);
         smiley.setVisibility(View.VISIBLE);
         party.setVisibility(View.VISIBLE);
         recipientText.setVisibility(View.VISIBLE);
@@ -230,13 +265,15 @@ public class StickItActivity extends AppCompatActivity {
 
     // show how many time each sticker has been used
     public void displaySentTimes(DataSnapshot dataSnapshot) {
-        com.example.a7atyourservice.User user = dataSnapshot.getValue(com.example.a7atyourservice.User.class);
-        String name = user.getName();
-        String SmileySentTimes = dataSnapshot.child("users").child(name)
+        String name = loginText.getText().toString();
+        String smileySentTimes = dataSnapshot.child("users").child(name)
                 .child("smiley_sticker").child("NumbersSent").getValue().toString();
-        smileySent.setText("sent: " + SmileySentTimes);
-
+        String partySentTimes = dataSnapshot.child("users").child(name)
+                .child("party_sticker").child("NumbersSent").getValue().toString();
+        smileySent.setText("sent: " + smileySentTimes);
+        partySent.setText("sent: " + partySentTimes);
     }
+
 
     // code here from -> https://developer.android.com/develop/ui/views/notifications/build-notification
     private void createNotificationChannel() {
