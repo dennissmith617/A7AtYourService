@@ -3,6 +3,7 @@ package com.example.a7atyourservice;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by aniru on 2/18/2017.
@@ -30,6 +31,10 @@ public class User {
         Date dNow = new Date();
         SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd");
         return ft.format(dNow);
+    }
+
+    public String getName(){
+        return this.username;
     }
 
 }

@@ -17,4 +17,5 @@
         android:text="Sticker History."
         android:textSize="18sp" />
 
+
 </RelativeLayout>

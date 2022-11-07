@@ -22,6 +22,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -45,6 +46,7 @@ public class StickItActivity extends AppCompatActivity {
 
     private DatabaseReference mDatabase;
     private ImageButton smiley;
+    private TextView smileySent;
     private Button loginButton;
     private Button sendButton;
     private Button historyButton;
@@ -53,8 +55,8 @@ public class StickItActivity extends AppCompatActivity {
     private TextView friendsList;
     private TextView stickerSentTv;
     private EditText recipientText;
-
     private String selectedSticker;
+    private boolean CheckExists = false;
 
 
     @SuppressLint("RestrictedApi")
@@ -73,8 +75,8 @@ public class StickItActivity extends AppCompatActivity {
         loginButton = findViewById(R.id.login);
         sendButton = findViewById(R.id.send_button);
         historyButton = findViewById(R.id.history_button);
-        historyButton.setVisibility(View.INVISIBLE);
         smiley = findViewById(R.id.smiley_sticker);
+        smileySent = findViewById(R.id.smiley_numSent);
         usernameView = findViewById(R.id.username_view);
         friendsList = findViewById(R.id.friends_list);
         recipientText = findViewById(R.id.recipient);
@@ -100,7 +102,8 @@ public class StickItActivity extends AppCompatActivity {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sendSticker(usernameView.getText().toString(), recipientText.getText().toString());
+                sendSticker(usernameView.getText().toString(), recipientText.getText().toString(),
+                        selectedSticker);
             }
         });
 
@@ -116,20 +119,6 @@ public class StickItActivity extends AppCompatActivity {
                 int height = LinearLayout.LayoutParams.WRAP_CONTENT;
                 boolean focusable = true; // lets taps outside the popup also dismiss it
                 final PopupWindow popupWindow = new PopupWindow(popupView, width, height, true);
-
-                //retrieve data fromDB
-                mDatabase.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        String stickerSentTxt = dataSnapshot.child("stickerSent").getValue().toString();
-                        stickerSentTv.setText(stickerSentTxt);
-                        Log.d(TAG, "Sticker sent: " + stickerSentTv);
-                    }
-                    @Override
-                    public void onCancelled(DatabaseError error) {
-                        Log.w(TAG, "Failed to read value.", error.toException());
-                    }
-                });
 
                 popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
                 //dismiss
@@ -156,6 +145,7 @@ public class StickItActivity extends AppCompatActivity {
 
                     @Override
                     public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                        displaySentTimes(dataSnapshot);
                         sendNotification();
                         Log.v(TAG, "onChildChanged: " + dataSnapshot.getValue().toString());
                     }
@@ -178,7 +168,9 @@ public class StickItActivity extends AppCompatActivity {
                     }
                 }
         );
+
     }
+
 
     public void selectSticker(ImageButton sticker) {
         selectedSticker = sticker.getTransitionName();
@@ -186,22 +178,24 @@ public class StickItActivity extends AppCompatActivity {
         sticker.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
     }
 
-    public void sendSticker(String curr_username, String friend_username) {
+    public void sendSticker(String curr_username, String friend_username, String sticker_name) {
         DatabaseReference curr_user = mDatabase.child("users").child(curr_username);
         DatabaseReference to_user = mDatabase.child("users").child(friend_username);
+        DatabaseReference sticker_sent = mDatabase.child("users").child(friend_username).child(sticker_name);
 
         // increment
         DatabaseReference curr_user_sent_count= curr_user.child("stickersSent");
         DatabaseReference to_user_sticker_count = to_user.child("stickersRecieved");
-
+        DatabaseReference sticker_sent_count = sticker_sent.child("NumbersSent");
 
         curr_user_sent_count.setValue(ServerValue.increment(1));
         to_user_sticker_count.setValue(ServerValue.increment(1));
+        sticker_sent_count.setValue(ServerValue.increment(1));
+
     }
 
     // Add Users to DB
     public void addUser(String username) {
-
         User user;
         // Start off with no stickers
         user = new User(username, 0, 0);
@@ -211,6 +205,7 @@ public class StickItActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(),"Unable to login!",Toast.LENGTH_SHORT).show();
         }
         String displayText = "username: " + loginText.getText().toString();
+
 
         // Hide Login Info
         loginButton.setVisibility(View.INVISIBLE);
@@ -222,6 +217,30 @@ public class StickItActivity extends AppCompatActivity {
         recipientText.setVisibility(View.VISIBLE);
         sendButton.setVisibility(View.VISIBLE);
         historyButton.setVisibility(View.VISIBLE);
+        smileySent.setVisibility(View.VISIBLE);
+    }
+
+    // to check if the user already exist
+    private boolean userExist(String nameToCheck) {
+        mDatabase.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Iterable<DataSnapshot> userChildren = dataSnapshot.getChildren();
+
+                for (DataSnapshot user : userChildren) {
+                    User u = user.getValue(User.class);
+                    if (u.username.equals(nameToCheck)) {
+                        CheckExists = true;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        return CheckExists;
     }
 
     public void displayFriends(DataSnapshot dataSnapshot) {
@@ -229,6 +248,15 @@ public class StickItActivity extends AppCompatActivity {
         String current_friends = friendsList.getText().toString();
         String new_friends_list = current_friends + user.username + ", ";
         friendsList.setText("Friends: " + new_friends_list);
+    }
+
+    public void displaySentTimes(DataSnapshot dataSnapshot) {
+        User user = dataSnapshot.getValue(User.class);
+        String name = user.getName();
+        String SmileySentTimes = dataSnapshot.child("users").child(name)
+                .child("smiley_sticker").child("NumbersSent").getValue().toString();
+        smileySent.setText("sent: " + SmileySentTimes);
+
     }
 
 
