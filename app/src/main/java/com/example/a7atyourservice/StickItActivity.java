@@ -198,11 +198,9 @@ public class StickItActivity extends AppCompatActivity {
     // Add Users to DB
     public void addUser(String username) {
         String displayText;
-        // check if the user already exist
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                // if not exist - create a new user profile
                 if (!dataSnapshot.child("users").exists()){
                     com.example.a7atyourservice.User user;
                     // Start off with no stickers
@@ -238,14 +236,14 @@ public class StickItActivity extends AppCompatActivity {
 
 
     public void displayFriends(DataSnapshot dataSnapshot) {
-        User user = dataSnapshot.getValue(User.class);
+        com.example.a7atyourservice.User user = dataSnapshot.getValue(com.example.a7atyourservice.User.class);
         String current_friends = friendsList.getText().toString();
         String new_friends_list = current_friends + user.username + ", ";
         friendsList.setText("Friends: " + new_friends_list);
     }
 
     public void displaySentTimes(DataSnapshot dataSnapshot) {
-        User user = dataSnapshot.getValue(User.class);
+        com.example.a7atyourservice.User user = dataSnapshot.getValue(com.example.a7atyourservice.User.class);
         String name = user.getName();
         String SmileySentTimes = dataSnapshot.child("users").child(name)
                 .child("smiley_sticker").child("NumbersSent").getValue().toString();
