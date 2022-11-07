@@ -229,4 +229,8 @@ public class StickItActivity extends AppCompatActivity {
         notificationManager.notify(0, notifyBuild.build());
 
     }
+
+    public void openAboutScreen(View view) {
+        startActivity(new Intent(this, com.example.a7atyourservice.InfoScreen.class));
+    }
 }
