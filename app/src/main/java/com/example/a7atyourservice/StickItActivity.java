@@ -92,6 +92,7 @@ public class StickItActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 addUser(loginText.getText().toString());
+
             }
         });
 
@@ -114,16 +115,11 @@ public class StickItActivity extends AppCompatActivity {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                //TODO: need a way to check existing user,
-                // so that we prevent adding to schema with non-existing username
-                // also need to place value increments in transactions.
                 if(selectedSticker != null) {
                     sendSticker(loginText.getText().toString(), recipientText.getText().toString(), selectedSticker);
                 } else {
                     Toast.makeText(getApplicationContext(), "Please select a sticker", Toast.LENGTH_SHORT).show();
                 }
-                sendSticker(loginText.getText().toString(), recipientText.getText().toString(), selectedSticker);
             }
         });
 
@@ -166,7 +162,6 @@ public class StickItActivity extends AppCompatActivity {
 
                     @Override
                     public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-//                        sendNotification();
                         displaySentTimes(dataSnapshot);
                         Log.v(TAG, "onChildChanged: " + dataSnapshot.getValue().toString());
                     }
@@ -207,11 +202,10 @@ public class StickItActivity extends AppCompatActivity {
         // increment
         DatabaseReference curr_user_sent_count= curr_user.child("stickersSent");
         DatabaseReference to_user_sticker_count = to_user.child("stickersRecieved");
-        DatabaseReference sticker_sent_count = sticker_sent.child("NumbersSent");
 
         curr_user_sent_count.setValue(ServerValue.increment(1));
         to_user_sticker_count.setValue(ServerValue.increment(1));
-        sticker_sent_count.setValue(ServerValue.increment(1));
+        sticker_sent.setValue(ServerValue.increment(1));
 
     }
 
@@ -224,9 +218,9 @@ public class StickItActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (!dataSnapshot.child("users").child(username).exists()){
-                    com.example.a7atyourservice.User user;
+                    User user;
                     // Start off with no stickers
-                    user = new com.example.a7atyourservice.model.User(username, 0, 0);
+                    user = new User(username, 0, 0);
                     Task t1 = mDatabase.child("users").child(user.username).setValue(user);
 
                     if (!t1.isSuccessful()) {
@@ -255,8 +249,7 @@ public class StickItActivity extends AppCompatActivity {
         recipientText.setVisibility(View.VISIBLE);
         sendButton.setVisibility(View.VISIBLE);
         historyButton.setVisibility(View.VISIBLE);
-        smileySent.setVisibility(View.VISIBLE);
-        partySent.setVisibility(View.VISIBLE);
+
     }
 
 
@@ -271,13 +264,13 @@ public class StickItActivity extends AppCompatActivity {
 
     // show how many time each sticker has been used
     public void displaySentTimes(DataSnapshot dataSnapshot) {
-        String name = loginText.getText().toString();
-        String smileySentTimes = dataSnapshot.child("users").child(name)
-                .child("smiley_sticker").child("NumbersSent").getValue().toString();
-        String partySentTimes = dataSnapshot.child("users").child(name)
-                .child("party_sticker").child("NumbersSent").getValue().toString();
+        User user = dataSnapshot.getValue(User.class);
+        String smileySentTimes = String.valueOf(user.smiley_sticker);
+        String partySentTimes = String.valueOf(user.party_sticker);
         smileySent.setText("sent: " + smileySentTimes);
         partySent.setText("sent: " + partySentTimes);
+        smileySent.setVisibility(View.VISIBLE);
+        partySent.setVisibility(View.VISIBLE);
     }
 
 

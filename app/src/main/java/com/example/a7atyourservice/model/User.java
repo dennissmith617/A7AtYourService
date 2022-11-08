@@ -14,6 +14,8 @@ public class User {
     public int stickersSent;
     public int stickersRecieved;
     public String dateSent;
+    public int smiley_sticker;
+    public int party_sticker;
 
 
     public User() {
@@ -35,5 +37,6 @@ public class User {
     public String getName(){
         return this.username;
     }
+
 
 }
