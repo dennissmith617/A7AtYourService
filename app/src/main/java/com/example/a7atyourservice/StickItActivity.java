@@ -114,7 +114,7 @@ public class StickItActivity extends AppCompatActivity {
                 // so that we prevent adding to schema with non-existing username
                 // also need to place value increments in transactions.
                 if(selectedSticker != null) {
-                    sendSticker(username, recipientText.getText().toString(), selectedSticker);
+                    sendSticker(loginText.getText().toString(), recipientText.getText().toString(), selectedSticker);
                 } else {
                     Toast.makeText(getApplicationContext(), "Please select a sticker", Toast.LENGTH_SHORT).show();
                 }
