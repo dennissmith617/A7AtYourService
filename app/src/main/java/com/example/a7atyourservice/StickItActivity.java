@@ -26,6 +26,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import com.example.a7atyourservice.model.Message;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.ChildEventListener;
@@ -198,6 +199,11 @@ public class StickItActivity extends AppCompatActivity {
         DatabaseReference curr_user = mDatabase.child("users").child(curr_username);
         DatabaseReference to_user = mDatabase.child("users").child(friend_username);
         DatabaseReference sticker_sent = mDatabase.child("users").child(curr_username).child(sticker_name);
+
+        // log message entry
+        DatabaseReference msg_log = to_user.child("chatLog");
+        Message message = new Message(sticker_name,curr_username,friend_username);
+        msg_log.push().setValue(message);
 
         // increment
         DatabaseReference curr_user_sent_count= curr_user.child("stickersSent");
