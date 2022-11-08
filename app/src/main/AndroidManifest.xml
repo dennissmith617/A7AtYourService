@@ -15,21 +15,25 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".StickItActivity"
-            android:exported="true"
-            android:parentActivityName=".MainActivity"
+            android:name=".History"
             android:configChanges="orientation|screenSize"
-            />
+            android:exported="true"
+            android:parentActivityName=".StickItActivity" />
+        <activity
+            android:name=".StickItActivity"
+            android:configChanges="orientation|screenSize"
+            android:exported="true"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".RetrofitActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="true"
-            android:parentActivityName=".MainActivity"
-            android:configChanges="orientation|screenSize"/>
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".InfoScreen"
+            android:configChanges="orientation|screenSize"
             android:exported="true"
-            android:parentActivityName=".MainActivity"
-            android:configChanges="orientation|screenSize"/>
+            android:parentActivityName=".MainActivity" />
 
         <meta-data
             android:name="android.webkit.WebView.EnableSafeBrowsing"

@@ -3,7 +3,6 @@ package com.example.a7atyourservice;
 import android.annotation.SuppressLint;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -17,17 +16,21 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.example.a7atyourservice.model.Message;
-import com.google.android.gms.tasks.OnCompleteListener;
+import com.firebase.ui.database.FirebaseListAdapter;
+import com.firebase.ui.database.FirebaseListOptions;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -61,6 +64,8 @@ public class StickItActivity extends AppCompatActivity {
     private TextView partySent;
     private Button historyButton;
 
+    private FirebaseListAdapter<Message> adapter;
+    private ListView history;
 
     @SuppressLint("RestrictedApi")
     @Override
@@ -93,7 +98,6 @@ public class StickItActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 addUser(loginText.getText().toString());
-
             }
         });
 
@@ -129,24 +133,7 @@ public class StickItActivity extends AppCompatActivity {
         historyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                LayoutInflater inflater = (LayoutInflater)
-                        getSystemService(LAYOUT_INFLATER_SERVICE);
-                View popupView = inflater.inflate(R.layout.popup_window, null);
-
-                int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-                int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-                boolean focusable = true; // lets taps outside the popup also dismiss it
-                final PopupWindow popupWindow = new PopupWindow(popupView, width, height, true);
-
-                popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
-                //dismiss
-                popupView.setOnTouchListener(new View.OnTouchListener() {
-                    @Override
-                    public boolean onTouch(View v, MotionEvent event) {
-                        popupWindow.dismiss();
-                        return true;
-                    }
-                });
+                startActivity(new Intent(StickItActivity.this, com.example.a7atyourservice.History.class));
             }
         });
 
@@ -316,4 +303,5 @@ public class StickItActivity extends AppCompatActivity {
     public void openAboutScreen(View view) {
         startActivity(new Intent(this, com.example.a7atyourservice.InfoScreen.class));
     }
+
 }
