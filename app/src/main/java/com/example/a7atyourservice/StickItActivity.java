@@ -33,11 +33,10 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.example.a7atyourservice.User;
+import com.example.a7atyourservice.model.User;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
 
 public class StickItActivity extends AppCompatActivity {
 
@@ -119,6 +118,11 @@ public class StickItActivity extends AppCompatActivity {
                 //TODO: need a way to check existing user,
                 // so that we prevent adding to schema with non-existing username
                 // also need to place value increments in transactions.
+                if(selectedSticker != null) {
+                    sendSticker(loginText.getText().toString(), recipientText.getText().toString(), selectedSticker);
+                } else {
+                    Toast.makeText(getApplicationContext(), "Please select a sticker", Toast.LENGTH_SHORT).show();
+                }
                 sendSticker(loginText.getText().toString(), recipientText.getText().toString(), selectedSticker);
             }
         });
@@ -149,7 +153,6 @@ public class StickItActivity extends AppCompatActivity {
             }
         });
 
-
         // Update the friends list in realtime
         mDatabase.child("users").addChildEventListener(
                 new ChildEventListener() {
@@ -157,6 +160,7 @@ public class StickItActivity extends AppCompatActivity {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                         displayFriends(dataSnapshot);
+                        sendNotification();
                         Log.e(TAG, "onChildAdded: dataSnapshot = " + dataSnapshot.getValue().toString());
                     }
 
@@ -214,6 +218,7 @@ public class StickItActivity extends AppCompatActivity {
     // Add Users to DB
     public void addUser(String username) {
         String displayText;
+        this.username = username;
         // check if the user already exists, if not, create a new user profile
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -221,7 +226,7 @@ public class StickItActivity extends AppCompatActivity {
                 if (!dataSnapshot.child("users").child(username).exists()){
                     com.example.a7atyourservice.User user;
                     // Start off with no stickers
-                    user = new com.example.a7atyourservice.User(username, 0, 0);
+                    user = new com.example.a7atyourservice.model.User(username, 0, 0);
                     Task t1 = mDatabase.child("users").child(user.username).setValue(user);
 
                     if (!t1.isSuccessful()) {
@@ -257,9 +262,10 @@ public class StickItActivity extends AppCompatActivity {
 
     public void displayFriends(DataSnapshot dataSnapshot) {
         User user = dataSnapshot.getValue(User.class);
-        currentFriends = new StringBuilder(currentFriends).append(", ").append(user.username).toString();
-        String new_friends_list = "Friends: " + currentFriends;
-        friendsList.setText(new_friends_list);
+        if(user != null && user.username != null) {
+            currentFriends = new StringBuilder(currentFriends).append(user.username).append(",").toString();
+            friendsList.append(currentFriends);
+        }
     }
 
 
@@ -297,7 +303,7 @@ public class StickItActivity extends AppCompatActivity {
         NotificationCompat.Builder notifyBuild = new NotificationCompat.Builder(this, channelId)
                 .setSmallIcon(R.drawable.smiley)
                 .setContentTitle("New sticker alert!")
-                .setContentText("Subject")
+                .setContentText("Congratulations on your sticker")
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 // hide the notification after its selected
                 .setAutoCancel(true);
@@ -306,5 +312,9 @@ public class StickItActivity extends AppCompatActivity {
         // // notificationId is a unique int for each notification that you must define
         notificationManager.notify(0, notifyBuild.build());
 
+    }
+
+    public void openAboutScreen(View view) {
+        startActivity(new Intent(this, com.example.a7atyourservice.InfoScreen.class));
     }
 }

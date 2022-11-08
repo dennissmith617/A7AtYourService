@@ -1,4 +1,4 @@
-package com.example.a7atyourservice;
+package com.example.a7atyourservice.model;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
