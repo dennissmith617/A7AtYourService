@@ -32,8 +32,8 @@ public class History extends AppCompatActivity {
         history = findViewById(R.id.history_v);
 
         FirebaseListOptions<Message> options = new FirebaseListOptions.Builder<Message>()
-            .setLayout(R.layout.chat_history)    // switched order of setlayout and setquery - Cauviya
             .setQuery(mDatabase, Message.class)
+            .setLayout(R.layout.chat_history)
             .build();
 
         adapter = new FirebaseListAdapter<Message>(options)  {
@@ -58,16 +58,5 @@ public class History extends AppCompatActivity {
         history.setAdapter(adapter);
     }
     
-    // below this just added - Cauviya
-    @Override
-    protected void onStart() {
-        super.onStart();
-        adapter.startListening();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        adapter.stopListening();
-    }
+  
 }
