@@ -36,4 +36,30 @@
         app:layout_constraintRight_toRightOf="parent"
         />
 
+    <Button
+        android:id="@+id/stickitbtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="starStickItActivity"
+        android:text="Stick it to Em"
+        android:layout_margin="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/retrofitbtn"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+
+        />
+
+    <Button
+        android:id="@+id/about"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="openAboutScreen"
+        android:text="About"
+        android:layout_margin="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/stickitbtn"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+
+        />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
