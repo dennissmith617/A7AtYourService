@@ -4,11 +4,21 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/yau.m/Desktop/Divers/NEU/NUMAD22Fa_Team41/app/src/main/res/layout/activity_stickit.xml" value="0.317481884057971" />
+        <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1445" />
+        <entry key="app/src/main/res/drawable/navbar_home_foreground.xml" value="0.2345" />
+        <entry key="app/src/main/res/drawable/navbar_lift_foreground.xml" value="0.1445" />
+        <entry key="app/src/main/res/layout/activity_camera.xml" value="0.23541666666666666" />
         <entry key="app/src/main/res/layout/activity_info_screen.xml" value="0.14336372847011145" />
         <entry key="app/src/main/res/layout/activity_launch_web.xml" value="0.2994791666666667" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.375" />
         <entry key="app/src/main/res/layout/activity_retrofit.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_service_screen.xml" value="0.375" />
+        <entry key="app/src/main/res/layout/activity_sf_diet.xml" value="0.234375" />
+        <entry key="app/src/main/res/layout/activity_sf_lift.xml" value="0.234375" />
+        <entry key="app/src/main/res/layout/activity_sf_main.xml" value="0.234375" />
+        <entry key="app/src/main/res/layout/activity_sf_social.xml" value="0.23541666666666666" />
+        <entry key="app/src/main/res/layout/activity_sf_workout.xml" value="0.234375" />
+        <entry key="app/src/main/res/layout/activity_sfmain.xml" value="0.2328125" />
         <entry key="app/src/main/res/layout/activity_stickit.xml" value="0.18237915039062502" />
         <entry key="app/src/main/res/layout/activity_web_service.xml" value="0.21458333333333332" />
         <entry key="app/src/main/res/layout/content_main.xml" value="0.25" />

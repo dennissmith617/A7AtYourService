@@ -1,4 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navhome"
+        android:title="Home"
+        android:icon="@drawable/navbar_home_foreground"
+        />
 
+    <item
+        android:id="@+id/navlift"
+        android:title="Lift"
+        android:icon="@drawable/navbar_lift_foreground"
+        />
+
+    <item
+        android:id="@+id/navPhoto"
+        android:title="Photo"
+        android:icon="@drawable/navbar_photo_foreground"
+        />
+
+    <item
+        android:id="@+id/navDiet"
+        android:title="Diet"
+        android:icon="@drawable/navbar_diet_foreground"
+        />
+
+    <item
+        android:id="@+id/navSocial"
+        android:title="Social"
+        android:icon="@drawable/navbar_social_foreground"
+        />
 </menu>
