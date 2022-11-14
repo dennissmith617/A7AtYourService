@@ -11,7 +11,9 @@
         <entry key="app/src/main/res/layout/activity_service_screen.xml" value="0.375" />
         <entry key="app/src/main/res/layout/activity_stickit.xml" value="0.18237915039062502" />
         <entry key="app/src/main/res/layout/activity_web_service.xml" value="0.21458333333333332" />
-        <entry key="app/src/main/res/layout/content_main.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/content_main.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/smartfit_footer.xml" value="0.21302083333333333" />
+        <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.21302083333333333" />
         <entry key="app/src/main/res/menu/menu_main.xml" value="0.2994791666666667" />
       </map>
     </option>
