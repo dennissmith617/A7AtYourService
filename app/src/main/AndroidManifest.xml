@@ -26,6 +26,11 @@
             android:parentActivityName=".MainActivity"
             android:configChanges="orientation|screenSize"/>
         <activity
+            android:name=".SmartFitMainActivity"
+            android:exported="true"
+            android:parentActivityName=".MainActivity"
+            android:configChanges="orientation|screenSize"/>
+        <activity
             android:name=".InfoScreen"
             android:exported="true"
             android:parentActivityName=".MainActivity"

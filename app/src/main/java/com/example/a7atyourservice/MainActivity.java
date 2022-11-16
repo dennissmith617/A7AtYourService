@@ -14,6 +14,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
+    public void startSmartFitMainActivity(View view){
+        startActivity(new Intent(MainActivity.this, com.example.a7atyourservice.SmartFitMainActivity.class));
+    }
+
     public void startRetrofitActivity(View view){
         startActivity(new Intent(MainActivity.this, com.example.a7atyourservice.RetrofitActivity.class));
     }
