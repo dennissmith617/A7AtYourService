@@ -5,8 +5,17 @@
       <map>
         <entry key="..\:/Users/yau.m/Desktop/Divers/NEU/NUMAD22Fa_Team41/app/src/main/res/layout/activity_stickit.xml" value="0.317481884057971" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1445" />
+        <entry key="app/src/main/res/drawable/ic_baseline_camera_alt_24.xml" value="0.1035" />
+        <entry key="app/src/main/res/drawable/ic_baseline_fastfood_24.xml" value="0.1035" />
+        <entry key="app/src/main/res/drawable/ic_baseline_fitness_center_24.xml" value="0.1035" />
+        <entry key="app/src/main/res/drawable/ic_baseline_home_24.xml" value="0.1035" />
+        <entry key="app/src/main/res/drawable/ic_baseline_textsms_24.xml" value="0.234" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.234" />
+        <entry key="app/src/main/res/drawable/navbar_diet_foreground.xml" value="0.2415" />
         <entry key="app/src/main/res/drawable/navbar_home_foreground.xml" value="0.2345" />
         <entry key="app/src/main/res/drawable/navbar_lift_foreground.xml" value="0.1445" />
+        <entry key="app/src/main/res/drawable/navbar_photo_foreground.xml" value="0.2415" />
+        <entry key="app/src/main/res/drawable/navbar_social_foreground.xml" value="0.2405" />
         <entry key="app/src/main/res/layout/activity_camera.xml" value="0.23541666666666666" />
         <entry key="app/src/main/res/layout/activity_info_screen.xml" value="0.14336372847011145" />
         <entry key="app/src/main/res/layout/activity_launch_web.xml" value="0.2994791666666667" />
@@ -15,16 +24,22 @@
         <entry key="app/src/main/res/layout/activity_service_screen.xml" value="0.375" />
         <entry key="app/src/main/res/layout/activity_sf_diet.xml" value="0.234375" />
         <entry key="app/src/main/res/layout/activity_sf_lift.xml" value="0.234375" />
-        <entry key="app/src/main/res/layout/activity_sf_main.xml" value="0.234375" />
+        <entry key="app/src/main/res/layout/activity_sf_main.xml" value="0.30747528076171876" />
         <entry key="app/src/main/res/layout/activity_sf_social.xml" value="0.23541666666666666" />
         <entry key="app/src/main/res/layout/activity_sf_workout.xml" value="0.234375" />
         <entry key="app/src/main/res/layout/activity_sfmain.xml" value="0.2328125" />
         <entry key="app/src/main/res/layout/activity_stickit.xml" value="0.18237915039062502" />
         <entry key="app/src/main/res/layout/activity_web_service.xml" value="0.21458333333333332" />
         <entry key="app/src/main/res/layout/content_main.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_camera.xml" value="0.25885416666666666" />
+        <entry key="app/src/main/res/layout/fragment_diet.xml" value="0.25885416666666666" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.24479166666666666" />
+        <entry key="app/src/main/res/layout/fragment_lifting.xml" value="0.25885416666666666" />
+        <entry key="app/src/main/res/layout/fragment_social.xml" value="0.25885416666666666" />
         <entry key="app/src/main/res/layout/smartfit_footer.xml" value="0.21302083333333333" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.21302083333333333" />
         <entry key="app/src/main/res/menu/menu_main.xml" value="0.2994791666666667" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/navbar_diet.xml" value="0.1035" />
       </map>
     </option>
   </component>
@@ -33,5 +48,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.30747528076171876" />
+      </ProjectState>
+    </option>
   </component>
 </project>

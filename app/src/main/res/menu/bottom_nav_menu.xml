@@ -1,32 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/navhome"
-        android:title="Home"
-        android:icon="@drawable/navbar_home_foreground"
+
+    <item android:title="Home"
+        android:icon="@drawable/ic_baseline_home_24"
+        android:id="@+id/home"
         />
 
-    <item
-        android:id="@+id/navlift"
-        android:title="Lift"
-        android:icon="@drawable/navbar_lift_foreground"
-        />
+    <item android:title="Lifting"
+        android:icon="@drawable/ic_baseline_fitness_center_24"
+        android:id="@+id/lifting"/>
 
-    <item
-        android:id="@+id/navPhoto"
-        android:title="Photo"
-        android:icon="@drawable/navbar_photo_foreground"
-        />
+    <item android:title="Camera"
+        android:icon="@drawable/ic_baseline_camera_alt_24"
+        android:id="@+id/camera"/>
 
-    <item
-        android:id="@+id/navDiet"
-        android:title="Diet"
-        android:icon="@drawable/navbar_diet_foreground"
-        />
+    <item android:title="Diet"
+        android:icon="@drawable/ic_baseline_fastfood_24"
+        android:id="@+id/diet"/>
 
-    <item
-        android:id="@+id/navSocial"
-        android:title="Social"
-        android:icon="@drawable/navbar_social_foreground"
-        />
+    <item android:title="Social"
+        android:icon="@drawable/ic_baseline_textsms_24"
+        android:id="@+id/social"/>
 </menu>
