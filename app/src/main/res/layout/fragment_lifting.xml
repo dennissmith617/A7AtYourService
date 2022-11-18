@@ -7,15 +7,28 @@
     tools:context=".LiftingFragment">
 
     <TextView
-        android:id="@+id/SFLiftCheck"
+        android:id="@+id/TimeSinceStart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="SmartFitLift"
+        android:text="@string/workout_length_0_minutes"
         android:textSize="25dp"
+        android:layout_gravity="center_horizontal"
 
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:text="Start Workout"
+        android:id="@+id/startWorkout"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:text="End Workout"
+        android:id="@+id/endWorkout"
+        android:visibility="invisible"/>
+
 </FrameLayout>

@@ -1,34 +1,34 @@
 {
   "project_info": {
-    "project_number": "254976940095",
-    "firebase_url": "https://cs5520-c3b62-default-rtdb.firebaseio.com",
-    "project_id": "cs5520-c3b62",
-    "storage_bucket": "cs5520-c3b62.appspot.com"
+    "project_number": "474070171903",
+    "firebase_url": "https://smartfit-e495d-default-rtdb.firebaseio.com",
+    "project_id": "smartfit-e495d",
+    "storage_bucket": "smartfit-e495d.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:254976940095:android:e572f74d94ce1f9836c08a",
+        "mobilesdk_app_id": "1:474070171903:android:c3cdc092915d9b02da0cca",
         "android_client_info": {
           "package_name": "com.example.a7atyourservice"
         }
       },
       "oauth_client": [
         {
-          "client_id": "254976940095-4djl9actmrg7rjmnip7r55gk6vh0pgua.apps.googleusercontent.com",
+          "client_id": "474070171903-gs6pmrs1242t7jctni2sqjflt2eb8o1d.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBtOi2eZauE0LwGjF6vcN3IuQhig4sKzFw"
+          "current_key": "AIzaSyDhSuVhz0mfCyjpQpE9rzZFhO3A228IFdE"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "254976940095-4djl9actmrg7rjmnip7r55gk6vh0pgua.apps.googleusercontent.com",
+              "client_id": "474070171903-gs6pmrs1242t7jctni2sqjflt2eb8o1d.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
