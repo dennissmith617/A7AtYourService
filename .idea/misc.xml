@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../layout/custom_preview.xml" value="0.1" />
         <entry key="..\:/Users/yau.m/Desktop/Divers/NEU/NUMAD22Fa_Team41/app/src/main/res/layout/activity_stickit.xml" value="0.317481884057971" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1445" />
         <entry key="app/src/main/res/drawable/ic_baseline_camera_alt_24.xml" value="0.1035" />
@@ -19,6 +20,7 @@
         <entry key="app/src/main/res/layout/activity_camera.xml" value="0.23541666666666666" />
         <entry key="app/src/main/res/layout/activity_info_screen.xml" value="0.14336372847011145" />
         <entry key="app/src/main/res/layout/activity_launch_web.xml" value="0.2994791666666667" />
+        <entry key="app/src/main/res/layout/activity_listview.xml" value="0.19947916666666668" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.375" />
         <entry key="app/src/main/res/layout/activity_retrofit.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_service_screen.xml" value="0.375" />
@@ -35,7 +37,8 @@
         <entry key="app/src/main/res/layout/fragment_diet.xml" value="0.25885416666666666" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.24479166666666666" />
         <entry key="app/src/main/res/layout/fragment_lifting.xml" value="0.25885416666666666" />
-        <entry key="app/src/main/res/layout/fragment_social.xml" value="0.25885416666666666" />
+        <entry key="app/src/main/res/layout/fragment_social.xml" value="0.1932723999023438" />
+        <entry key="app/src/main/res/layout/popup_window.xml" value="0.19947916666666668" />
         <entry key="app/src/main/res/layout/smartfit_footer.xml" value="0.21302083333333333" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.21302083333333333" />
         <entry key="app/src/main/res/menu/menu_main.xml" value="0.2994791666666667" />
