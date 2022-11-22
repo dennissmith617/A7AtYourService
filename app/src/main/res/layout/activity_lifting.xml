@@ -7,7 +7,7 @@
     tools:context=".CameraActivity">
 
     <TextView
-        android:id="@+id/TimeSinceStart"
+        android:id="@+id/timeSinceStart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/workout_length_0_minutes"
@@ -21,7 +21,37 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Start Workout"
-        app:layout_constraintTop_toBottomOf="@+id/TimeSinceStart" />
+        app:layout_constraintTop_toBottomOf="@+id/timeSinceStart" />
+
+    <include
+        android:id="@+id/exampleLift1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        layout="@layout/individuallift"
+
+        app:layout_constraintTop_toBottomOf="@+id/startWorkout"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        />
+
+    <include
+        android:id="@+id/exampleLift2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        layout="@layout/individuallift"
+
+
+        app:layout_constraintTop_toBottomOf="@+id/exampleLift1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        />
+
+
+
+
+
 
     <Button
         android:id="@+id/endWorkout"

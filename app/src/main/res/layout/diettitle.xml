@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/blackoutline">
+
+    <TextView
+        android:id="@+id/banner"
+        android:text="Today's Calorie Goal"
+        android:textSize="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/goalCals"
+        android:text="2000"
+        android:textSize="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintTop_toBottomOf="@+id/banner"
+        app:layout_constraintEnd_toStartOf="@+id/minus"
+
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="30dp"
+        />
+
+    <TextView
+        android:id="@+id/goalText"
+        android:text="Goal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintTop_toBottomOf="@+id/goalCals"
+        app:layout_constraintStart_toStartOf="@+id/goalCals"
+        app:layout_constraintEnd_toEndOf="@id/goalCals"
+        />
+
+    <TextView
+        android:id="@+id/minus"
+        android:text="-"
+        android:textSize="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintEnd_toStartOf="@+id/foodCals"
+        app:layout_constraintBaseline_toBaselineOf="@+id/foodCals"
+
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        />
+
+    <TextView
+        android:id="@+id/foodCals"
+        android:text="1500"
+        android:textSize="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintTop_toBottomOf="@+id/banner"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="30dp"
+        />
+
+    <TextView
+        android:id="@+id/foodText"
+        android:text="Food"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintTop_toBottomOf="@+id/foodCals"
+        app:layout_constraintStart_toStartOf="@id/foodCals"
+        app:layout_constraintEnd_toEndOf="@id/foodCals"
+        />
+
+    <TextView
+        android:id="@+id/equals"
+        android:text="="
+        android:textSize="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintStart_toEndOf="@id/foodCals"
+        app:layout_constraintBaseline_toBaselineOf="@id/foodCals"
+
+        android:layout_marginLeft="30dp"
+        />
+
+    <TextView
+        android:id="@+id/remainingCals"
+        android:text="500"
+        android:textSize="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintStart_toEndOf="@+id/equals"
+        app:layout_constraintBaseline_toBaselineOf="@+id/equals"
+
+        android:layout_marginLeft="30dp"
+        />
+
+    <TextView
+        android:id="@+id/remainingText"
+        android:text="Remaining"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintTop_toBottomOf="@+id/remainingCals"
+        app:layout_constraintStart_toStartOf="@id/remainingCals"
+        app:layout_constraintEnd_toEndOf="@id/remainingCals"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

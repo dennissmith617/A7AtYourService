@@ -6,6 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".DietActivity">
 
+    <include
+        android:id="@+id/include"
+        layout="@layout/diettitle"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <include
+        android:id="@+id/dietmeals"
+        layout="@layout/dietmeals"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavView"

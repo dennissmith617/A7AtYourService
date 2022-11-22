@@ -38,7 +38,7 @@ public class LiftingActivity extends AppCompatActivity implements View.OnClickLi
         endWorkoutButton = findViewById(R.id.endWorkout);
         endWorkoutButton.setOnClickListener(this);
 
-        timeSinceStart = findViewById(R.id.TimeSinceStart);
+        timeSinceStart = findViewById(R.id.timeSinceStart);
 
         // Initialize and assign variable
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavView);
