@@ -4,10 +4,13 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <uses-feature android:name="android.hardware.camera.any" />
+
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="28" />
 
     <application
@@ -20,26 +23,39 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".DietActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SocialActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CameraActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LiftingActivity"
+            android:exported="false"
+            android:label="@string/title_activity_lifting"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".StickItActivity"
-            android:exported="true"
-            android:parentActivityName=".MainActivity"
             android:configChanges="orientation|screenSize"
-            />
+            android:exported="true"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".RetrofitActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="true"
-            android:parentActivityName=".MainActivity"
-            android:configChanges="orientation|screenSize"/>
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".SmartFitMainActivity"
+            android:configChanges="orientation|screenSize"
             android:exported="true"
-            android:parentActivityName=".MainActivity"
-            android:configChanges="orientation|screenSize"/>
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".InfoScreen"
+            android:configChanges="orientation|screenSize"
             android:exported="true"
-            android:parentActivityName=".MainActivity"
-            android:configChanges="orientation|screenSize"/>
+            android:parentActivityName=".MainActivity" />
 
         <meta-data
             android:name="android.webkit.WebView.EnableSafeBrowsing"

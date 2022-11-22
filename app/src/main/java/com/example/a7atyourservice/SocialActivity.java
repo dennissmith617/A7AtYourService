@@ -1,40 +1,31 @@
 package com.example.a7atyourservice;
 
-import android.Manifest;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.os.Bundle;
-import android.view.MenuItem;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
-import com.example.a7atyourservice.databinding.ActivitySfMainBinding;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Toast;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
-public class SmartFitMainActivity extends AppCompatActivity {
-
-    ActivitySfMainBinding binding;
-
-    private static final String[] CAMERA_PERMISSION = new String[]{Manifest.permission.CAMERA};
-    private static final int CAMERA_REQUEST_CODE = 10;
+public class SocialActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sf_main);
+        setContentView(R.layout.activity_social);
 
         // Initialize and assign variable
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavView);
 
         // Set Home selected
-        bottomNavigationView.setSelectedItemId(R.id.home);
+        bottomNavigationView.setSelectedItemId(R.id.social);
 
         // Perform item selected listener
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
@@ -42,18 +33,18 @@ public class SmartFitMainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.home:
+                        startActivity(new Intent(getApplicationContext(),SmartFitMainActivity.class));
+                        overridePendingTransition(0,0);
                         return true;
                     case R.id.lifting:
                         startActivity(new Intent(getApplicationContext(),LiftingActivity.class));
                         overridePendingTransition(0,0);
                         return true;
                     case R.id.camera:
-                        startActivity(new Intent(getApplicationContext(), CameraActivity.class));
-                        overridePendingTransition(0, 0);
+                        startActivity(new Intent(getApplicationContext(),CameraActivity.class));
+                        overridePendingTransition(0,0);
                         return true;
                     case R.id.social:
-                        startActivity(new Intent(getApplicationContext(),SocialActivity.class));
-                        overridePendingTransition(0,0);
                         return true;
                     case R.id.diet:
                         startActivity(new Intent(getApplicationContext(),DietActivity.class));
@@ -63,21 +54,7 @@ public class SmartFitMainActivity extends AppCompatActivity {
                 return false;
             }
         });
+
     }
 
-
-    private boolean hasCameraPermission() {
-        return ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.CAMERA
-        ) == PackageManager.PERMISSION_GRANTED;
-    }
-
-    private void requestPermission() {
-        ActivityCompat.requestPermissions(
-                this,
-                CAMERA_PERMISSION,
-                CAMERA_REQUEST_CODE
-        );
-    }
 }

@@ -18,8 +18,10 @@
         <entry key="app/src/main/res/drawable/navbar_photo_foreground.xml" value="0.2415" />
         <entry key="app/src/main/res/drawable/navbar_social_foreground.xml" value="0.2405" />
         <entry key="app/src/main/res/layout/activity_camera.xml" value="0.23541666666666666" />
+        <entry key="app/src/main/res/layout/activity_diet.xml" value="0.15070921985815602" />
         <entry key="app/src/main/res/layout/activity_info_screen.xml" value="0.14336372847011145" />
         <entry key="app/src/main/res/layout/activity_launch_web.xml" value="0.2994791666666667" />
+        <entry key="app/src/main/res/layout/activity_lifting.xml" value="0.2586050724637681" />
         <entry key="app/src/main/res/layout/activity_listview.xml" value="0.19947916666666668" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.375" />
         <entry key="app/src/main/res/layout/activity_retrofit.xml" value="0.1" />
@@ -30,14 +32,19 @@
         <entry key="app/src/main/res/layout/activity_sf_social.xml" value="0.23541666666666666" />
         <entry key="app/src/main/res/layout/activity_sf_workout.xml" value="0.234375" />
         <entry key="app/src/main/res/layout/activity_sfmain.xml" value="0.2328125" />
+        <entry key="app/src/main/res/layout/activity_social.xml" value="0.14387031408308004" />
         <entry key="app/src/main/res/layout/activity_stickit.xml" value="0.18237915039062502" />
         <entry key="app/src/main/res/layout/activity_web_service.xml" value="0.21458333333333332" />
+        <entry key="app/src/main/res/layout/content_lifting.xml" value="0.2586050724637681" />
         <entry key="app/src/main/res/layout/content_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_camera.xml" value="0.25885416666666666" />
         <entry key="app/src/main/res/layout/fragment_diet.xml" value="0.25885416666666666" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.24479166666666666" />
         <entry key="app/src/main/res/layout/fragment_lifting.xml" value="0.25885416666666666" />
+        <entry key="app/src/main/res/layout/fragment_second.xml" value="0.15070921985815602" />
         <entry key="app/src/main/res/layout/fragment_social.xml" value="0.1932723999023438" />
+        <entry key="app/src/main/res/layout/individuallift.xml" value="0.2453125" />
+        <entry key="app/src/main/res/layout/liftscreenlook.xml" value="0.2453125" />
         <entry key="app/src/main/res/layout/popup_window.xml" value="0.19947916666666668" />
         <entry key="app/src/main/res/layout/smartfit_footer.xml" value="0.21302083333333333" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.21302083333333333" />
