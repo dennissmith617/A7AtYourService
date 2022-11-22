@@ -28,7 +28,7 @@
         <entry key="app/src/main/res/layout/activity_service_screen.xml" value="0.375" />
         <entry key="app/src/main/res/layout/activity_sf_diet.xml" value="0.234375" />
         <entry key="app/src/main/res/layout/activity_sf_lift.xml" value="0.234375" />
-        <entry key="app/src/main/res/layout/activity_sf_main.xml" value="0.30747528076171876" />
+        <entry key="app/src/main/res/layout/activity_sf_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_sf_social.xml" value="0.23541666666666666" />
         <entry key="app/src/main/res/layout/activity_sf_workout.xml" value="0.234375" />
         <entry key="app/src/main/res/layout/activity_sfmain.xml" value="0.2328125" />
@@ -62,7 +62,7 @@
   <component name="VisualizationToolProject">
     <option name="state">
       <ProjectState>
-        <option name="scale" value="0.30747528076171876" />
+        <option name="scale" value="0.1" />
       </ProjectState>
     </option>
   </component>
