@@ -19,11 +19,13 @@
         <entry key="app/src/main/res/drawable/navbar_photo_foreground.xml" value="0.2415" />
         <entry key="app/src/main/res/drawable/navbar_social_foreground.xml" value="0.2405" />
         <entry key="app/src/main/res/layout/activity_camera.xml" value="0.23541666666666666" />
+        <entry key="app/src/main/res/layout/activity_create_account.xml" value="0.20969202898550723" />
         <entry key="app/src/main/res/layout/activity_diet.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_info_screen.xml" value="0.14336372847011145" />
         <entry key="app/src/main/res/layout/activity_launch_web.xml" value="0.2994791666666667" />
         <entry key="app/src/main/res/layout/activity_lifting.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_listview.xml" value="0.19947916666666668" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.20969202898550723" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.375" />
         <entry key="app/src/main/res/layout/activity_retrofit.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_service_screen.xml" value="0.375" />
