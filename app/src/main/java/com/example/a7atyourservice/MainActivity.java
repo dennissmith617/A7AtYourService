@@ -6,6 +6,9 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -15,7 +18,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startSmartFitMainActivity(View view){
-        startActivity(new Intent(MainActivity.this, com.example.a7atyourservice.SmartFitMainActivity.class));
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (firebaseUser == null) {
+            startActivity(new Intent(MainActivity.this, com.example.a7atyourservice.LoginActivity.class));
+        } else {
+            startActivity(new Intent(MainActivity.this, com.example.a7atyourservice.SmartFitMainActivity.class));
+        }
     }
 
     public void startRetrofitActivity(View view){
