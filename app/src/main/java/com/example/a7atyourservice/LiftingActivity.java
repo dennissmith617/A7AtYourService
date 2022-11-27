@@ -11,10 +11,16 @@ import android.os.Handler;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.a7atyourservice.model.LiftInfo;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.DocumentReference;
 
 
 public class LiftingActivity extends AppCompatActivity implements View.OnClickListener {
@@ -26,6 +32,9 @@ public class LiftingActivity extends AppCompatActivity implements View.OnClickLi
     Button startWorkoutButton;
     Button endWorkoutButton;
     TextView timeSinceStart;
+    EditText liftEditText;
+    EditText weightEditText;
+    EditText repsEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +48,11 @@ public class LiftingActivity extends AppCompatActivity implements View.OnClickLi
         endWorkoutButton.setOnClickListener(this);
 
         timeSinceStart = findViewById(R.id.timeSinceStart);
+
+        liftEditText = findViewById(R.id.indivliftname);
+        weightEditText = findViewById(R.id.repsNum);
+        repsEditText = findViewById(R.id.weightNum);
+
 
         // Initialize and assign variable
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavView);
@@ -94,14 +108,51 @@ public class LiftingActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.endWorkout:
                 running = false; // Flip to False to halt worker thread
 
-                // end of workout, reset buttons + timer (maybe save state here?)
+
+                // Save to DB
+                saveWorkout(n);
+
+                // end of workout, reset buttons + timer
                 startWorkoutButton.setVisibility(View.VISIBLE);
                 endWorkoutButton.setVisibility(View.INVISIBLE);
                 n = 0;
                 timeSinceStart.setText(startText);
-
                 break;
         }
+    }
+
+    private void saveWorkout(int workoutLen) {
+        String liftName = liftEditText.getText().toString();
+
+        String weightString = weightEditText.getText().toString();
+        int weight=Integer.parseInt(weightString);
+
+        String repString = repsEditText.getText().toString();
+        int reps =Integer.parseInt(repString);
+
+        LiftInfo liftInfo = new LiftInfo();
+        liftInfo.setLiftName(liftName);
+        liftInfo.setReps(reps);
+        liftInfo.setWeight(weight);
+        liftInfo.setTimestamp(Timestamp.now());
+        liftInfo.setLength(workoutLen);
+
+        saveWorkoutToFirebase(liftInfo);
+    }
+
+    private void saveWorkoutToFirebase(LiftInfo liftInfo) {
+        DocumentReference documentReference;
+        documentReference = Helpers.getCollectionReferenceForLifting().document();
+        documentReference.set(liftInfo).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Helpers.showToast(LiftingActivity.this, "Workout successfully added");
+                } else {
+                    Helpers.showToast(LiftingActivity.this, "Workout unable to be added");
+                }
+            }
+        });
     }
 
     class CounterRunnable implements Runnable {
