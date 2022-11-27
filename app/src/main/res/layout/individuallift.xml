@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -18,30 +19,16 @@
         app:layout_constraintTop_toTopOf="parent"
         />
 
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/indivliftcheck"
-        android:layout_margin="10dp"
-        android:scaleX="1.5"
-        android:scaleY="1.5"
-        android:checked = "false"
-
-        app:layout_constraintTop_toBottomOf="@id/indivliftname"
-        app:layout_constraintLeft_toLeftOf="parent"
-        />
-
     <TextView
+        android:id="@+id/weighttitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/weighttitle"
+        android:layout_marginRight="52dp"
         android:text="Weight"
         android:textSize="15dp"
-        android:layout_marginRight="20dp"
 
         app:layout_constraintBaseline_toBaselineOf="@+id/indivliftname"
-        app:layout_constraintRight_toLeftOf="@+id/reptitle"
-        />
+        app:layout_constraintRight_toLeftOf="@+id/reptitle" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -78,16 +65,26 @@
         app:layout_constraintRight_toRightOf="parent"
         />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/addsetfab"
-        android:layout_width="38dp"
-        android:layout_height="26dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="44dp"
-        app:fabCustomSize="30dp"
-
+    <EditText
+        android:id="@+id/repsNum"
+        android:layout_width="77dp"
+        android:layout_height="55dp"
+        android:layout_marginRight="16dp"
+        android:ems="10"
+        android:inputType="number"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/indivrepweight" />
+        app:layout_constraintTop_toBottomOf="@id/reptitle" />
+
+    <EditText
+        android:id="@+id/weightNum"
+        android:layout_width="77dp"
+        android:layout_height="55dp"
+        android:layout_marginRight="16dp"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/weighttitle"
+        app:layout_constraintRight_toLeftOf= "@id/repsNum"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
