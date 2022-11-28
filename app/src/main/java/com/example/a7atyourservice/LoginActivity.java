@@ -37,7 +37,10 @@ public class LoginActivity extends AppCompatActivity {
         createAccountBtnView = findViewById(R.id.create_acct_view_btn);
 
         loginButton.setOnClickListener(v -> loginUser());
-        createAccountBtnView.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, CreateAccountActivity.class)));
+        createAccountBtnView.setOnClickListener(v -> {
+            startActivity(new Intent(LoginActivity.this, CreateAccountActivity.class));
+            finish();
+        });
     }
 
     private void loginUser() {
