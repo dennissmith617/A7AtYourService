@@ -11,12 +11,6 @@ android {
     }
 
     signingConfigs {
-        debug {
-            storeFile file('/Users/dennissmith/Documents/dennissmithkeystore.jks')
-            storePassword 'password'
-            keyAlias 'key0'
-            keyPassword 'password'
-        }
         release {
             storeFile file('/Users/dennissmith/Documents/dennissmithkeystore.jks')
             storePassword 'password'
@@ -25,7 +19,6 @@ android {
         }
     }
     compileSdkVersion 31
-    buildToolsVersion "29.0.3"
     defaultConfig {
         applicationId "com.example.a7atyourservice"
         minSdkVersion 26
@@ -85,4 +78,7 @@ dependencies {
 
     implementation "androidx.camera:camera-view:${camerax_version}"
     implementation "androidx.camera:camera-extensions:${camerax_version}"
+
+    //calendar dependencies
+    implementation 'com.applandeo:material-calendar-view:1.7.0'
 }
