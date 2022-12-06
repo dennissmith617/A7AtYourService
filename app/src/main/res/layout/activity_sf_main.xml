@@ -6,8 +6,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".SmartFitMainActivity">
 
-
-
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavView"
         android:layout_width="match_parent"
@@ -17,15 +15,26 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/bottom_nav_menu" />
 
-    <TextView
-        android:id="@+id/welcomeText"
-        android:layout_width="wrap_content"
+    <com.applandeo.materialcalendarview.CalendarView
+        android:id="@+id/calendarView"
+        app_headerColor="@color/colorPrimary"
+        app_layout_constraintBottom_toBottomOf="parent"
+        app_layout_constraintLeft_toLeftOf="parent"
+        app_layout_constraintRight_toRightOf="parent"
+        app_layout_constraintTop_toBottomOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:highlightedDaysLabelsColor="#009688"
+        />
+
+    <Button
+        android:id="@+id/checkinButton"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Welcome to SmartFit!"
-        android:textSize="30dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        android:text="check in"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavView"
+        app:layout_constraintTop_toTopOf="@+id/calendarView"
+        app:layout_constraintVertical_bias="0.978"
+        tools:layout_editor_absoluteX="0dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
