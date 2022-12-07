@@ -28,6 +28,10 @@ public class Foods {
         return name;
     }
 
+    public String getMeal(){
+        return meal;
+    }
+
     public void setName(String name){
         this.name = name;
     }

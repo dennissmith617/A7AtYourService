@@ -5,15 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Spinner
-        android:id="@+id/mealSpinner"
-        android:layout_width="fill_parent"
-        android:layout_height="41dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="4dp"
-        android:layout_marginRight="4dp"
-        android:layout_marginBottom="4dp"/>
-
     <EditText
         android:id="@+id/tv_foodEdit"
         android:inputType="text"

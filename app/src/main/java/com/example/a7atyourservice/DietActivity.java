@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.wifi.p2p.WifiP2pManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -37,9 +38,14 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+
 public class DietActivity extends AppCompatActivity implements View.OnClickListener{
     private FloatingActionButton buttonAddFood;
-    private Spinner mealSpinner;
+    private View buttonAddBf;
+    private View buttonAddLc;
+    private View buttonAddDn;
+    private View buttonAddSn;
+    private boolean isFABOpen;
     private ArrayList<Foods> foodsList;
     private RecyclerView foodsView;
     private Context context = this;
@@ -54,11 +60,29 @@ public class DietActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_diet);
 
         buttonAddFood = findViewById(R.id.addFoodButton);
-        buttonAddFood.setOnClickListener(this);
+        buttonAddBf = findViewById(R.id.bfButton);
+        buttonAddBf.setOnClickListener(this);
+        buttonAddLc = findViewById(R.id.lcButton);
+        buttonAddLc.setOnClickListener(this);
+        buttonAddDn = findViewById(R.id.dnButton);
+        buttonAddDn.setOnClickListener(this);
+        buttonAddSn = findViewById(R.id.snButton);
+        buttonAddSn.setOnClickListener(this);
+        isFABOpen = false;
+        buttonAddFood.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!isFABOpen){
+                    showFABMenu();
+                }else{
+                    closeFABMenu();
+                }
+            }
+        });
 
         foodsList = new ArrayList<>();
 
-        foodsView = findViewById(R.id.mealRecycleView1);
+        foodsView = findViewById(R.id.rv_foods);
         foodsView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new DietInfoAdapter(foodsList, this);
         foodsView.setAdapter(adapter);
@@ -98,16 +122,6 @@ public class DietActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
-//        mealSpinner = (Spinner) findViewById(R.id.mealSpinner);
-//        // set up the meal spinner
-//        ArrayAdapter<CharSequence> staticAdapter = ArrayAdapter
-//                .createFromResource(this, R.array.meal_array,
-//                        android.R.layout.simple_spinner_item);
-//        staticAdapter
-//                .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        mealSpinner.setAdapter(staticAdapter);
-
-
 
         // Initialize and assign variable
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavView);
@@ -144,8 +158,51 @@ public class DietActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
+    // FAB menu animation
+    private void showFABMenu(){
+        isFABOpen=true;
+        buttonAddBf.animate().translationY(-560);
+        findViewById(R.id.tv_bf).setVisibility(View.VISIBLE);
+        buttonAddLc.animate().translationY(-420);
+        findViewById(R.id.tv_lc).setVisibility(View.VISIBLE);
+        buttonAddDn.animate().translationY(-280);
+        findViewById(R.id.tv_dn).setVisibility(View.VISIBLE);
+        buttonAddSn.animate().translationY(-140);
+        findViewById(R.id.tv_sn).setVisibility(View.VISIBLE);
+    }
+
+    private void closeFABMenu(){
+        isFABOpen=false;
+        buttonAddBf.animate().translationY(0);
+        findViewById(R.id.tv_bf).setVisibility(View.INVISIBLE);
+        buttonAddLc.animate().translationY(0);
+        findViewById(R.id.tv_lc).setVisibility(View.INVISIBLE);
+        buttonAddDn.animate().translationY(0);
+        findViewById(R.id.tv_dn).setVisibility(View.INVISIBLE);
+        buttonAddSn.animate().translationY(0);
+        findViewById(R.id.tv_sn).setVisibility(View.INVISIBLE);
+    }
+
     @Override
     public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.bfButton:
+                popUpWindow("Breakfast");
+                break;
+            case R.id.lcButton:
+                popUpWindow("Lunch");
+                break;
+            case R.id.dnButton:
+                popUpWindow("Dinner");
+                break;
+            case R.id.snButton:
+                popUpWindow("Snacks");
+                break;
+        }
+    }
+
+    public void popUpWindow(String meal){
+        final String myMeal = meal;
         AlertDialog.Builder builder
                 = new AlertDialog.Builder(this);
         builder.setTitle("Add a new food");
@@ -161,7 +218,7 @@ public class DietActivity extends AppCompatActivity implements View.OnClickListe
                         EditText fat = customLayout.findViewById(R.id.tv_fatEdit);
                         EditText carb = customLayout.findViewById(R.id.tv_carbEdit);
                         EditText prot = customLayout.findViewById(R.id.tv_ProtEdit);
-                        saveMeal("meal", food.getText().toString(),
+                        saveMeal(myMeal, food.getText().toString(),
                                 Integer.valueOf(fat.getText().toString()),
                                 Integer.valueOf(carb.getText().toString()),
                                 Integer.valueOf(prot.getText().toString()));
