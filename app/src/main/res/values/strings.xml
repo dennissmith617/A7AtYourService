@@ -29,4 +29,11 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="welcome_to_smartfit_register_here">Welcome to SmartFit. Register Here.</string>
 
+    <string-array name="meal_array">
+        <item>Breakfast</item>
+        <item>Lunch</item>
+        <item>Dinner</item>
+        <item>Snack</item>
+    </string-array>
+
 </resources>

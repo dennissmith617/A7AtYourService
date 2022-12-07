@@ -12,7 +12,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="20dp"
         android:id="@+id/tv_name"
-        android:text="111111111"
+        android:text="Workout Name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:singleLine="true"
@@ -22,6 +22,7 @@
     <TextView
         android:layout_marginStart="16dp"
         android:id="@+id/tv_detail"
+        android:text="Workout details"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:singleLine="true"
@@ -31,6 +32,7 @@
     <TextView
         android:layout_marginStart="16dp"
         android:id="@+id/tv_time"
+        android:text="Time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:singleLine="true"

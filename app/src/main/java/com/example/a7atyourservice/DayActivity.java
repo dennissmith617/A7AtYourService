@@ -32,16 +32,16 @@ public class DayActivity extends AppCompatActivity {
         rvDay.setLayoutManager(new LinearLayoutManager(this));
         rvDay.setAdapter(adapter);
          time = getIntent().getLongExtra("day", 0L);
-        Log.e("zqz",time+"");
+        Log.e("time",time+"");
         Helpers.getCollectionReferenceForLifting().addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 infoList.clear();
-                Log.e("zqz",value.toString());
+                Log.e("list",value.toString());
                 List<DocumentSnapshot> datas = value.getDocuments();
                 for (int i = 0; i < datas.size(); i++) {
                     LiftInfo liftInfo = datas.get(i).toObject(LiftInfo.class);
-                    Log.e("zqz",liftInfo.getLiftName());
+                    Log.e("liftName",liftInfo.getLiftName());
                     long afterDay = time+24*60*60*1000;
                     if (liftInfo.getTimestamp().getSeconds()*1000>time&&liftInfo.getTimestamp().getSeconds()*1000<afterDay){
                         infoList.add(liftInfo);

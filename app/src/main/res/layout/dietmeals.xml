@@ -32,10 +32,8 @@
         android:id="@+id/snacktime"
         layout="@layout/individualmeal"
 
-        app:layout_constraintTop_toBottomOf="@id/dinner"
         app:layout_constraintLeft_toLeftOf="parent"
-        />
-
+        app:layout_constraintTop_toBottomOf="@id/dinner" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -23,6 +23,13 @@ public class Helpers {
         return FirebaseFirestore.getInstance().collection("workouts").
                 document(firebaseUser.getUid()).collection("my_workouts");
     }
+
+    public static CollectionReference getCollectionReferenceForDiets() {
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        return FirebaseFirestore.getInstance().collection("diets").
+                document(firebaseUser.getUid()).collection("my_foods");
+    }
+
     public static DocumentReference getCheckRef() {
 
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
