@@ -32,17 +32,20 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class SmartFitMainActivity extends AppCompatActivity {
 
     private CalendarView calendarView;
     private Button checkinButton;
+    private Button finishButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sf_main);
+
         // set up calendar
         calendarView = findViewById(R.id.calendarView);
         calendarView.setOnDayClickListener(new OnDayClickListener() {
@@ -56,6 +59,7 @@ public class SmartFitMainActivity extends AppCompatActivity {
 
         // set up check in button
         checkinButton = findViewById(R.id.checkinButton);
+        finishButton = findViewById(R.id.finishButton);
         checkinButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -125,6 +129,11 @@ public class SmartFitMainActivity extends AppCompatActivity {
                                 for (int i = 0; i < list.size(); i++) {
                                     String temp = list.get(i);
                                     Date date = stringToDate(temp);
+                                    Date today = stringToDate(
+                                            new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date()));
+                                    if (date.compareTo(today) == 0){
+                                        finishButton.setVisibility(View.VISIBLE);;
+                                    }
                                     Calendar calendar = Calendar.getInstance();
                                     calendar.setTime(date);
                                     events.add(new EventDay(calendar, R.drawable.check));

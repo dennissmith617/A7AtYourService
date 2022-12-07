@@ -27,8 +27,9 @@
         android:id="@+id/bottomNavView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#BDAFAF"
-        app:itemTextColor="#009688"
+        android:background="@color/colorPrimary"
+        app:itemTextColor="@color/bottom_nav_color"
+        app:itemIconTint="@color/bottom_nav_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/bottom_nav_menu" />
 
@@ -88,10 +89,10 @@
         android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.884"
+        app:layout_constraintHorizontal_bias="0.929"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.894"
+        app:layout_constraintVertical_bias="0.9"
         app:srcCompat="@android:drawable/ic_input_add" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
