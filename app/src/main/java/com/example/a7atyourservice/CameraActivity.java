@@ -13,21 +13,29 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
-public class CameraActivity extends AppCompatActivity {
+public class CameraActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final int CAMERA_REQUEST = 1888;
     private ImageView imageView;
     private static final int MY_CAMERA_PERMISSION_CODE = 100;
+    private TextView shareButton;
+    private TextView saveButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
+
+        shareButton = findViewById(R.id.tv_share);
+        saveButton = findViewById(R.id.tv_save);
+        saveButton.setOnClickListener(this);
+
 
         // Initialize and assign variable
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavView);
@@ -64,7 +72,7 @@ public class CameraActivity extends AppCompatActivity {
         });
 
         this.imageView = (ImageView)this.findViewById(R.id.imageView1);
-        Button photoButton = (Button) this.findViewById(R.id.button1);
+        ImageView photoButton = (ImageView) this.findViewById(R.id.button1);
         photoButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -108,6 +116,13 @@ public class CameraActivity extends AppCompatActivity {
         if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
             Bitmap photo = (Bitmap) data.getExtras().get("data");
             imageView.setImageBitmap(photo);
+            saveButton.setVisibility(View.VISIBLE);
+            shareButton.setVisibility(View.VISIBLE);
         }
+    }
+
+    @Override
+    public void onClick(View view) {
+
     }
 }
