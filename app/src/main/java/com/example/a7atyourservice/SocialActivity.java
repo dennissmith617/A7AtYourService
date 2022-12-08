@@ -23,7 +23,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class SocialActivity extends AppCompatActivity {
     private FirebaseAnalytics mFirebaseAnalytics;
-    private FirebaseListAdapter<ChatMessaging> adapter;
+    //private FirebaseListAdapter<ChatMessaging> adapter;
 
 
     @Override
@@ -69,6 +69,7 @@ public class SocialActivity extends AppCompatActivity {
             }
         });
 
+        /*
         FloatingActionButton chatbutton =
                 (FloatingActionButton)findViewById(R.id.chatbutton);
 
@@ -94,15 +95,19 @@ public class SocialActivity extends AppCompatActivity {
         });
         displayChatMessages();
 
+         */
 
 
 
+
+
+    }
+
+    /*private void displayChatMessages(){
 
     }
 
-    private void displayChatMessages(){
-
-    }
+     */
 
 
 }
