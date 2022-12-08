@@ -2,6 +2,8 @@ package com.example.a7atyourservice;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +21,7 @@ import java.util.List;
 
 public class DayActivity extends AppCompatActivity {
     private RecyclerView rvDay;
+    private Button backButton;
     private List<LiftInfo> infoList = new ArrayList<>();
     private long time;
     private LiftInfoAdapter adapter;
@@ -28,6 +31,7 @@ public class DayActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_day);
         rvDay = findViewById(R.id.day);
+        backButton = findViewById(R.id.back_button);
         adapter = new LiftInfoAdapter(this,infoList);
         rvDay.setLayoutManager(new LinearLayoutManager(this));
         rvDay.setAdapter(adapter);
@@ -48,6 +52,14 @@ public class DayActivity extends AppCompatActivity {
                     }
                 }
                 adapter.notifyDataSetChanged();
+            }
+        });
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // close out activity
+                finish();
             }
         });
     }

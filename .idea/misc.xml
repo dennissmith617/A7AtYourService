@@ -20,6 +20,7 @@
         <entry key="app/src/main/res/drawable/navbar_social_foreground.xml" value="0.2405" />
         <entry key="app/src/main/res/layout/activity_camera.xml" value="0.23541666666666666" />
         <entry key="app/src/main/res/layout/activity_create_account.xml" value="0.20969202898550723" />
+        <entry key="app/src/main/res/layout/activity_day.xml" value="0.20199275362318841" />
         <entry key="app/src/main/res/layout/activity_diet.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_info_screen.xml" value="0.14336372847011145" />
         <entry key="app/src/main/res/layout/activity_launch_web.xml" value="0.2994791666666667" />
