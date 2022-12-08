@@ -9,8 +9,6 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class Helpers {
 
@@ -22,6 +20,12 @@ public class Helpers {
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         return FirebaseFirestore.getInstance().collection("workouts").
                 document(firebaseUser.getUid()).collection("my_workouts");
+    }
+
+    public static CollectionReference getCollectionReferenceForCamera() {
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        return FirebaseFirestore.getInstance().collection("images").
+                document(firebaseUser.getUid()).collection("my_images");
     }
 
     public static CollectionReference getCollectionReferenceForDiets() {
