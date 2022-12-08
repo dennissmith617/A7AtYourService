@@ -7,21 +7,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.wifi.p2p.WifiP2pManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.a7atyourservice.model.Foods;
-import com.example.a7atyourservice.model.LiftInfo;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -48,7 +43,6 @@ public class DietActivity extends AppCompatActivity implements View.OnClickListe
     private boolean isFABOpen;
     private ArrayList<Foods> foodsList;
     private RecyclerView foodsView;
-    private Context context = this;
     private long time;
     private DietInfoAdapter adapter;
     private TextView calToday;
