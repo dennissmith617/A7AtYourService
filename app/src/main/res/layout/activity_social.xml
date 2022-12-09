@@ -17,7 +17,9 @@
         app:menu="@menu/bottom_nav_menu" />
 
 
+
     <ListView
+        android:id="@+id/lvChat"
         android:layout_width="409dp"
         android:layout_height="673dp"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavView"
@@ -25,40 +27,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/chatbutton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
-            android:clickable="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@android:drawable/ic_menu_send" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-
-                android:hint="hint" />
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Input"
-                android:id="@+id/input"
-                />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-
     </ListView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

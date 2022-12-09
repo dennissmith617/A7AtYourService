@@ -3,7 +3,6 @@ package com.example.a7atyourservice;
 import android.annotation.SuppressLint;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -27,7 +26,6 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.example.a7atyourservice.model.Message;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -76,7 +74,7 @@ public class StickItActivity extends AppCompatActivity {
 
         loginText = (EditText) findViewById(R.id.username);
         loginButton = findViewById(R.id.login);
-        sendButton = findViewById(R.id.send_button);
+        sendButton = findViewById(R.id.btnSendMsg);
         smiley = findViewById(R.id.smiley_sticker);
         party = findViewById(R.id.party_sticker);
         usernameView = findViewById(R.id.username_view);
