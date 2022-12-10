@@ -26,6 +26,7 @@ import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -45,6 +46,7 @@ public class DietActivity extends AppCompatActivity implements View.OnClickListe
     private RecyclerView foodsView;
     private long time;
     private DietInfoAdapter adapter;
+    private EditText calGoal;
     private TextView calToday;
     private TextView calRemain;
 
@@ -81,6 +83,7 @@ public class DietActivity extends AppCompatActivity implements View.OnClickListe
         adapter = new DietInfoAdapter(foodsList, this);
         foodsView.setAdapter(adapter);
 
+        calGoal = findViewById(R.id.goalCals);
         calToday = findViewById(R.id.foodCals);
         calRemain = findViewById(R.id.remainingCals);
 
@@ -109,7 +112,8 @@ public class DietActivity extends AppCompatActivity implements View.OnClickListe
                             cals += food.getCal();
                         }
                         calToday.setText(String.valueOf(cals));
-                        calRemain.setText(String.valueOf(2000 - cals));
+                        calRemain.setText(String.valueOf(
+                                Integer.valueOf(calGoal.getText().toString()) - cals));
                     }
                 }
                 adapter.notifyDataSetChanged();
@@ -237,5 +241,9 @@ public class DietActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
         });
+    }
+
+    private void saveGoal(int goal){
+
     }
 }
