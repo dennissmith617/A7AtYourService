@@ -42,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+
     private void loginUser() {
         String email_text = email.getText().toString();
         String password_text = password.getText().toString();
@@ -96,4 +97,6 @@ public class LoginActivity extends AppCompatActivity {
         }
         return true;
     }
+
+
 }

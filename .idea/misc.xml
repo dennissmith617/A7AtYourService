@@ -58,6 +58,10 @@
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.21302083333333333" />
         <entry key="app/src/main/res/menu/menu_main.xml" value="0.2994791666666667" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/navbar_diet.xml" value="0.1035" />
+<<<<<<< HEAD
+=======
+        <entry key="app/src/main/res/xml/provider_paths.xml" value="0.14583333333333334" />
+>>>>>>> b17ce81 (Cleanup, saving and sharing photos)
       </map>
     </option>
   </component>
