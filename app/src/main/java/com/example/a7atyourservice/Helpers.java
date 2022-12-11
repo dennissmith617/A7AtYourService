@@ -33,10 +33,9 @@ public class Helpers {
         return FirebaseFirestore.getInstance().collection("diets").
                 document(firebaseUser.getUid()).collection("my_foods");
     }
-
     public static DocumentReference getCollectionReferenceForGoals() {
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        return FirebaseFirestore.getInstance().collection("diets").
+        return FirebaseFirestore.getInstance().collection("goal").
                 document(firebaseUser.getUid());
     }
 

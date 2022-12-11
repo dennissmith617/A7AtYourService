@@ -1,5 +1,7 @@
 package com.example.a7atyourservice;
 
+import static com.google.firebase.firestore.model.Values.isInteger;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -10,19 +12,26 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.a7atyourservice.model.Check;
 import com.example.a7atyourservice.model.Foods;
+import com.example.a7atyourservice.model.Goal;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.Timestamp;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -30,9 +39,15 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class DietActivity extends AppCompatActivity implements View.OnClickListener{
@@ -58,6 +73,9 @@ public class DietActivity extends AppCompatActivity implements View.OnClickListe
     private EditText calGoal;
     private TextView calToday;
     private TextView calRemain;
+    private TextView protToday;
+    private TextView carbToday;
+    private TextView fatToday;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,6 +129,9 @@ public class DietActivity extends AppCompatActivity implements View.OnClickListe
         calGoal = findViewById(R.id.goalCals);
         calToday = findViewById(R.id.foodCals);
         calRemain = findViewById(R.id.remainingCals);
+        protToday = findViewById(R.id.tv_protNow);
+        carbToday = findViewById(R.id.tv_carbNow);
+        fatToday = findViewById(R.id.tv_fatNow);
 
         Calendar today = Calendar.getInstance();
         today.set(Calendar.MILLISECOND, 0);
@@ -118,7 +139,42 @@ public class DietActivity extends AppCompatActivity implements View.OnClickListe
         today.set(Calendar.MINUTE, 0);
         today.set(Calendar.HOUR_OF_DAY, 0);
         time = today.getTimeInMillis();
-        // read current goal
+        // find current goal
+        Helpers.getCollectionReferenceForGoals().addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                if (value.exists()) {
+                    Goal goal = value.toObject(Goal.class);
+                    calGoal.setText(Integer. toString
+                            (goal.getGoal()));
+                    calRemain.setText(String.valueOf(
+                            Integer.valueOf(calGoal.getText().toString()) -
+                                    Integer.valueOf(calToday.getText().toString())));
+                } else {
+                    Helpers.getCollectionReferenceForGoals().set(new Goal(2000));
+                }
+            }
+
+        });
+
+
+        // set new goal
+        calGoal.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                calGoal.setCursorVisible(true);
+            }
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int before,
+                                      int count) {
+            }
+            @Override
+            public void afterTextChanged(final Editable s) {
+                calGoal.setSelection(calGoal.getText().toString().length());
+                Helpers.getCollectionReferenceForGoals()
+                        .update("goal",Integer.valueOf(calGoal.getText().toString()));
+            }
+        });
 
 
         // read and display diet data from database
@@ -132,6 +188,9 @@ public class DietActivity extends AppCompatActivity implements View.OnClickListe
                 Log.e("QuerySnapshot",value.toString());
                 List<DocumentSnapshot> datas = value.getDocuments();
                 int cals = 0;
+                int prot = 0;
+                int carbs = 0;
+                int fat = 0;
                 for (int i = 0; i < datas.size(); i++) {
                     Foods foodsInfo = datas.get(i).toObject(Foods.class);
                     Log.e("foodsName",foodsInfo.getName());
@@ -143,7 +202,13 @@ public class DietActivity extends AppCompatActivity implements View.OnClickListe
                                 Log.e("bfAdd",foodsInfo.getName());
                                 for (Foods food : bfList){
                                     cals += food.getCal();
+                                    prot += food.getProtein();
+                                    carbs += food.getCarb();
+                                    fat += food.getFat();
                                 }
+                                protToday.setText(prot + " g");
+                                carbToday.setText(carbs + " g");
+                                fatToday.setText(fat + " g");
                                 calToday.setText(String.valueOf(cals));
                                 calRemain.setText(String.valueOf(
                                         Integer.valueOf(calGoal.getText().toString()) - cals));
@@ -154,7 +219,13 @@ public class DietActivity extends AppCompatActivity implements View.OnClickListe
                                 Log.e("lcAdd",foodsInfo.getName());
                                 for (Foods food : lcList){
                                     cals += food.getCal();
+                                    prot += food.getProtein();
+                                    carbs += food.getCarb();
+                                    fat += food.getFat();
                                 }
+                                protToday.setText(prot + " g");
+                                carbToday.setText(carbs + " g");
+                                fatToday.setText(fat + " g");
                                 calToday.setText(String.valueOf(cals));
                                 calRemain.setText(String.valueOf(
                                         Integer.valueOf(calGoal.getText().toString()) - cals));
@@ -165,7 +236,13 @@ public class DietActivity extends AppCompatActivity implements View.OnClickListe
                                 Log.e("dnAdd",foodsInfo.getName());
                                 for (Foods food : dnList){
                                     cals += food.getCal();
+                                    prot += food.getProtein();
+                                    carbs += food.getCarb();
+                                    fat += food.getFat();
                                 }
+                                protToday.setText(prot + " g");
+                                carbToday.setText(carbs + " g");
+                                fatToday.setText(fat + " g");
                                 calToday.setText(String.valueOf(cals));
                                 calRemain.setText(String.valueOf(
                                         Integer.valueOf(calGoal.getText().toString()) - cals));
@@ -176,7 +253,13 @@ public class DietActivity extends AppCompatActivity implements View.OnClickListe
                                 Log.e("snAdd",foodsInfo.getName());
                                 for (Foods food : snList){
                                     cals += food.getCal();
+                                    prot += food.getProtein();
+                                    carbs += food.getCarb();
+                                    fat += food.getFat();
                                 }
+                                protToday.setText(prot + " g");
+                                carbToday.setText(carbs + " g");
+                                fatToday.setText(fat + " g");
                                 calToday.setText(String.valueOf(cals));
                                 calRemain.setText(String.valueOf(
                                         Integer.valueOf(calGoal.getText().toString()) - cals));
@@ -185,7 +268,6 @@ public class DietActivity extends AppCompatActivity implements View.OnClickListe
                         }
                     }
                 }
-//                adapter.notifyDataSetChanged();
             }
         });
 
@@ -312,7 +394,4 @@ public class DietActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
-    private void saveGoal(int goal){
-        Helpers.getCollectionReferenceForGoals().update("my_goal", calGoal.getText().toString());
-    }
 }

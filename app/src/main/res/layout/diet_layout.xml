@@ -12,12 +12,23 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+    <include
+        android:id="@+id/tv_macro"
+        layout="@layout/macro"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
     <TextView
         android:id="@+id/tx_bf"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="breakfast"
-        android:textColor="@color/colorPrimary" />
+        android:textSize="18dp"
+        android:textColor="@color/highLight"
+        android:background="#f59d8c"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_bf"
@@ -29,7 +40,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="lunch"
-        android:textColor="@color/colorPrimary" />
+        android:textSize="18dp"
+        android:textColor="@color/highLight"
+        android:background="#82dae0" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_lc"
@@ -41,7 +54,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="dinner"
-        android:textColor="@color/colorPrimary" />
+        android:textSize="18dp"
+        android:textColor="@color/highLight"
+        android:background="#8aa7eb" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_dn"
@@ -53,7 +68,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="snacks"
-        android:textColor="@color/colorPrimary" />
+        android:textSize="18dp"
+        android:textColor="@color/highLight"
+        android:background="#a8e6af" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_sn"

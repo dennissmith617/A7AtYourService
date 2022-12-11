@@ -105,8 +105,6 @@ public class SmartFitMainActivity extends AppCompatActivity {
                             }
                         });
 
-                ;
-
             }
         });
 
