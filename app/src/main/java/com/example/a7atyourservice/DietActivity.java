@@ -1,5 +1,7 @@
 package com.example.a7atyourservice;
 
+import static com.google.firebase.firestore.model.Values.isInteger;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -10,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -41,12 +45,25 @@ public class DietActivity extends AppCompatActivity implements View.OnClickListe
     private View buttonAddDn;
     private View buttonAddSn;
     private boolean isFABOpen;
-    private ArrayList<Foods> foodsList;
-    private RecyclerView foodsView;
+    private ArrayList<Foods> bfList;
+    private ArrayList<Foods> lcList;
+    private ArrayList<Foods> dnList;
+    private ArrayList<Foods> snList;
+    private RecyclerView bfView;
+    private RecyclerView lcView;
+    private RecyclerView dnView;
+    private RecyclerView snView;
     private long time;
-    private DietInfoAdapter adapter;
+    private DietInfoAdapter bfAdapter;
+    private DietInfoAdapter lcAdapter;
+    private DietInfoAdapter dnAdapter;
+    private DietInfoAdapter snAdapter;
+    private EditText calGoal;
     private TextView calToday;
     private TextView calRemain;
+    private TextView protToday;
+    private TextView carbToday;
+    private TextView fatToday;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,15 +91,35 @@ public class DietActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
-        foodsList = new ArrayList<>();
+        // initiate recycle view and adapters for each meal
+        bfList = new ArrayList<>();
+        lcList = new ArrayList<>();
+        dnList = new ArrayList<>();
+        snList = new ArrayList<>();
 
-        foodsView = findViewById(R.id.rv_foods);
-        foodsView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new DietInfoAdapter(foodsList, this);
-        foodsView.setAdapter(adapter);
+        bfView = findViewById(R.id.rv_bf);
+        bfView.setLayoutManager(new LinearLayoutManager(this));
+        bfAdapter = new DietInfoAdapter(bfList, this);
+        bfView.setAdapter(bfAdapter);
+        lcView = findViewById(R.id.rv_lc);
+        lcView.setLayoutManager(new LinearLayoutManager(this));
+        lcAdapter = new DietInfoAdapter(lcList, this);
+        lcView.setAdapter(lcAdapter);
+        dnView = findViewById(R.id.rv_dn);
+        dnView.setLayoutManager(new LinearLayoutManager(this));
+        dnAdapter = new DietInfoAdapter(dnList, this);
+        dnView.setAdapter(dnAdapter);
+        snView = findViewById(R.id.rv_sn);
+        snView.setLayoutManager(new LinearLayoutManager(this));
+        snAdapter = new DietInfoAdapter(snList, this);
+        snView.setAdapter(snAdapter);
 
+        calGoal = findViewById(R.id.goalCals);
         calToday = findViewById(R.id.foodCals);
         calRemain = findViewById(R.id.remainingCals);
+        protToday = findViewById(R.id.tv_protNow);
+        carbToday = findViewById(R.id.tv_carbNow);
+        fatToday = findViewById(R.id.tv_fatNow);
 
         Calendar today = Calendar.getInstance();
         today.set(Calendar.MILLISECOND, 0);
@@ -91,28 +128,134 @@ public class DietActivity extends AppCompatActivity implements View.OnClickListe
         today.set(Calendar.HOUR_OF_DAY, 0);
         time = today.getTimeInMillis();
 
+        // display current goal; if no goal has been set, set it to default 2000 and keep in database
+        Helpers.getCollectionReferenceForGoals().addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                if (value.exists()) {
+                    Goal goal = value.toObject(Goal.class);
+                    calGoal.setText(Integer. toString
+                            (goal.getGoal()));
+                    calRemain.setText(String.valueOf(
+                            Integer.valueOf(calGoal.getText().toString()) -
+                                    Integer.valueOf(calToday.getText().toString())));
+                } else {
+                    Helpers.getCollectionReferenceForGoals().set(new Goal(2000));
+                }
+            }
+
+        });
+
+        // set new goal to replace the old goal and keep in database
+        calGoal.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                calGoal.setCursorVisible(true);
+            }
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int before,
+                                      int count) {
+            }
+            @Override
+            public void afterTextChanged(final Editable s) {
+                calGoal.setSelection(calGoal.getText().toString().length());
+                Helpers.getCollectionReferenceForGoals()
+                        .update("goal",Integer.valueOf(calGoal.getText().toString()));
+            }
+        });
+
+
         // read and display diet data from database
         Helpers.getCollectionReferenceForDiets().addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                foodsList.clear();
+                bfList.clear();
+                lcList.clear();
+                dnList.clear();
+                snList.clear();
                 Log.e("QuerySnapshot",value.toString());
                 List<DocumentSnapshot> datas = value.getDocuments();
+                int cals = 0;
+                int prot = 0;
+                int carbs = 0;
+                int fat = 0;
                 for (int i = 0; i < datas.size(); i++) {
                     Foods foodsInfo = datas.get(i).toObject(Foods.class);
                     Log.e("foodsName",foodsInfo.getName());
                     long afterDay = time+24*60*60*1000;
                     if (foodsInfo.getTimestamp().getSeconds()*1000>time&&foodsInfo.getTimestamp().getSeconds()*1000<afterDay){
-                        foodsList.add(foodsInfo);
-                        int cals = 0;
-                        for (Foods food : foodsList){
-                            cals += food.getCal();
+                        switch (foodsInfo.getMeal()){
+                            case "Breakfast":
+                                bfList.add(foodsInfo);
+                                Log.e("bfAdd",foodsInfo.getName());
+                                for (Foods food : bfList){
+                                    cals += food.getCal();
+                                    prot += food.getProtein();
+                                    carbs += food.getCarb();
+                                    fat += food.getFat();
+                                }
+                                protToday.setText(prot + " g");
+                                carbToday.setText(carbs + " g");
+                                fatToday.setText(fat + " g");
+                                calToday.setText(String.valueOf(cals));
+                                calRemain.setText(String.valueOf(
+                                        Integer.valueOf(calGoal.getText().toString()) - cals));
+                                bfAdapter.notifyDataSetChanged();
+                                break;
+                            case "Lunch":
+                                lcList.add(foodsInfo);
+                                Log.e("lcAdd",foodsInfo.getName());
+                                for (Foods food : lcList){
+                                    cals += food.getCal();
+                                    prot += food.getProtein();
+                                    carbs += food.getCarb();
+                                    fat += food.getFat();
+                                }
+                                protToday.setText(prot + " g");
+                                carbToday.setText(carbs + " g");
+                                fatToday.setText(fat + " g");
+                                calToday.setText(String.valueOf(cals));
+                                calRemain.setText(String.valueOf(
+                                        Integer.valueOf(calGoal.getText().toString()) - cals));
+                                lcAdapter.notifyDataSetChanged();
+                                break;
+                            case "Dinner":
+                                dnList.add(foodsInfo);
+                                Log.e("dnAdd",foodsInfo.getName());
+                                for (Foods food : dnList){
+                                    cals += food.getCal();
+                                    prot += food.getProtein();
+                                    carbs += food.getCarb();
+                                    fat += food.getFat();
+                                }
+                                protToday.setText(prot + " g");
+                                carbToday.setText(carbs + " g");
+                                fatToday.setText(fat + " g");
+                                calToday.setText(String.valueOf(cals));
+                                calRemain.setText(String.valueOf(
+                                        Integer.valueOf(calGoal.getText().toString()) - cals));
+                                dnAdapter.notifyDataSetChanged();
+                                break;
+                            case "Snacks":
+                                snList.add(foodsInfo);
+                                Log.e("snAdd",foodsInfo.getName());
+                                for (Foods food : snList){
+                                    cals += food.getCal();
+                                    prot += food.getProtein();
+                                    carbs += food.getCarb();
+                                    fat += food.getFat();
+                                }
+                                protToday.setText(prot + " g");
+                                carbToday.setText(carbs + " g");
+                                fatToday.setText(fat + " g");
+                                calToday.setText(String.valueOf(cals));
+                                calRemain.setText(String.valueOf(
+                                        Integer.valueOf(calGoal.getText().toString()) - cals));
+                                snAdapter.notifyDataSetChanged();
+                                break;
                         }
-                        calToday.setText(String.valueOf(cals));
-                        calRemain.setText(String.valueOf(2000 - cals));
                     }
                 }
-                adapter.notifyDataSetChanged();
             }
         });
 
@@ -152,7 +295,7 @@ public class DietActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
-    // FAB menu animation
+    // FAB menu animation helper function - open
     private void showFABMenu(){
         isFABOpen=true;
         buttonAddBf.animate().translationY(-560);
@@ -165,6 +308,7 @@ public class DietActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.tv_sn).setVisibility(View.VISIBLE);
     }
 
+    // FAB menu animation helper function - close
     private void closeFABMenu(){
         isFABOpen=false;
         buttonAddBf.animate().translationY(0);
@@ -177,6 +321,7 @@ public class DietActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.tv_sn).setVisibility(View.INVISIBLE);
     }
 
+    // set up FAB menu listener
     @Override
     public void onClick(View view) {
         switch (view.getId()){
@@ -195,6 +340,7 @@ public class DietActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+   // promp input for the food
     public void popUpWindow(String meal){
         final String myMeal = meal;
         AlertDialog.Builder builder
@@ -222,6 +368,7 @@ public class DietActivity extends AppCompatActivity implements View.OnClickListe
         dialog.show();
     }
 
+    // save food to the database
     private void saveMeal(String meal, String name, int fat, int carb, int protein){
         DocumentReference documentReference;
         documentReference = Helpers.getCollectionReferenceForDiets().document();
@@ -238,4 +385,5 @@ public class DietActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
     }
+
 }
