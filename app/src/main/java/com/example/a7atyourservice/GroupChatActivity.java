@@ -205,10 +205,11 @@ public class GroupChatActivity extends AppCompatActivity {
         {
             String chatDate = (String) ((DataSnapshot)iterator.next()).getValue();
             String chatMessage = (String) ((DataSnapshot)iterator.next()).getValue();
-            String chatName = (String) ((DataSnapshot)iterator.next()).getValue(); // this line has problem I think
+            //String chatName = (String) ((DataSnapshot)iterator.next()).getValue();
             String chatTime = (String) ((DataSnapshot)iterator.next()).getValue();
 
-            displayTextMessages.append(chatName + " :\n" + chatMessage + "\n" + chatTime + "     " + chatDate + "\n\n\n");
+            //displayTextMessages.append(chatName + " :\n" + chatMessage + "\n" + chatTime + "     " + chatDate + "\n\n\n");
+            displayTextMessages.append("User " + currentUserID + ": \n" + chatMessage + "\n" + chatTime + "     " + chatDate + "\n\n\n");
 
             mScrollView.fullScroll(ScrollView.FOCUS_DOWN);
         }
