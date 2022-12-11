@@ -3,8 +3,10 @@ package com.example.a7atyourservice;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -39,6 +41,17 @@ public class GroupsActivity extends AppCompatActivity {
         groupView.setAdapter(arrayAdapter);
         
         DisplayGroups();
+
+        groupView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String currentGroupName = parent.getItemAtPosition(position).toString();
+                Intent groupChatIntent = new Intent(getApplicationContext(), GroupChatActivity.class);
+                groupChatIntent.putExtra("Group Name", currentGroupName);
+                startActivity(groupChatIntent);
+            }
+        });
     }
 
     private void DisplayGroups() {
