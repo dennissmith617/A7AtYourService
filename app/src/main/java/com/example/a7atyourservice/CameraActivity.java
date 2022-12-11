@@ -13,6 +13,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;

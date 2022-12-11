@@ -28,6 +28,7 @@
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="welcome_to_smartfit_register_here">Welcome to SmartFit. Register Here.</string>
+    <string name="progress_photo_hind">Hit this button to take a photo of your current progress!</string>
 
     <string-array name="meal_array">
         <item>Breakfast</item>
