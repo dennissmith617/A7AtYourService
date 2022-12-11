@@ -48,7 +48,7 @@ public class GroupsActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String currentGroupName = parent.getItemAtPosition(position).toString();
                 Intent groupChatIntent = new Intent(getApplicationContext(), GroupChatActivity.class);
-                groupChatIntent.putExtra("Group Name", currentGroupName);
+                groupChatIntent.putExtra("GroupName", currentGroupName);
                 startActivity(groupChatIntent);
             }
         });

@@ -46,8 +46,9 @@ public class GroupChatActivity extends AppCompatActivity {
         setContentView(R.layout.activity_group_chat);
 
 
+        ///currentGroupName = savedInstanceState.getString();
 
-        currentGroupName = getIntent().getExtras().get("groupName").toString();
+        currentGroupName = getIntent().getExtras().get("GroupName").toString();
         Toast.makeText(GroupChatActivity.this, currentGroupName, Toast.LENGTH_SHORT).show();
 
 
@@ -76,6 +77,7 @@ public class GroupChatActivity extends AppCompatActivity {
             }
         });
     }
+
 
 
 
@@ -121,6 +123,8 @@ public class GroupChatActivity extends AppCompatActivity {
     }
 
 
+
+
     private void InitializeFields()
     {
         mToolbar = (Toolbar) findViewById(R.id.group_chat_bar_layout);
@@ -160,7 +164,7 @@ public class GroupChatActivity extends AppCompatActivity {
     private void SaveMessageInfoToDatabase()
     {
         String message = userMessageInput.getText().toString();
-        String messagekEY = GroupNameRef.push().getKey();
+        String messageKEY = GroupNameRef.push().getKey();
 
         if (TextUtils.isEmpty(message))
         {
@@ -180,7 +184,7 @@ public class GroupChatActivity extends AppCompatActivity {
             HashMap<String, Object> groupMessageKey = new HashMap<>();
             GroupNameRef.updateChildren(groupMessageKey);
 
-            GroupMessageKeyRef = GroupNameRef.child(messagekEY);
+            GroupMessageKeyRef = GroupNameRef.child(messageKEY);
 
             HashMap<String, Object> messageInfoMap = new HashMap<>();
             messageInfoMap.put("name", currentUserName);
@@ -201,7 +205,7 @@ public class GroupChatActivity extends AppCompatActivity {
         {
             String chatDate = (String) ((DataSnapshot)iterator.next()).getValue();
             String chatMessage = (String) ((DataSnapshot)iterator.next()).getValue();
-            String chatName = (String) ((DataSnapshot)iterator.next()).getValue();
+            String chatName = (String) ((DataSnapshot)iterator.next()).getValue(); // this line has problem I think
             String chatTime = (String) ((DataSnapshot)iterator.next()).getValue();
 
             displayTextMessages.append(chatName + " :\n" + chatMessage + "\n" + chatTime + "     " + chatDate + "\n\n\n");
@@ -209,4 +213,6 @@ public class GroupChatActivity extends AppCompatActivity {
             mScrollView.fullScroll(ScrollView.FOCUS_DOWN);
         }
     }
+
+
 }
