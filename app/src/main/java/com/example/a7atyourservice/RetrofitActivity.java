@@ -27,6 +27,7 @@ public class RetrofitActivity extends AppCompatActivity {
     TextView webFeedback;
     ProgressBar loadingBar;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

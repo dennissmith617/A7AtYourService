@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'org.jetbrains.kotlin.android'
 
+
 android {
 
     lintOptions {
@@ -12,7 +13,7 @@ android {
 
     signingConfigs {
         release {
-            storeFile file('D:\\OneDrive - Northeastern University\\NEU 2022\\Fall\\CS 5520\\keystore.jks')
+            storeFile file('Users\\cauviyaselva\\Documents\\myKeystore')
             storePassword 'gg123456'
             keyAlias 'key1'
             keyPassword 'gg123456'
@@ -54,6 +55,7 @@ dependencies {
 
     // rest of the dependencies
     implementation 'androidx.appcompat:appcompat:1.2.0'
+
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'com.google.android.material:material:1.2.1'
     implementation 'androidx.webkit:webkit:1.4.0'
@@ -68,6 +70,17 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-database:19.6.0'
     implementation 'com.google.firebase:firebase-messaging:21.0.1'
+    // FirebaseUI for Firebase Realtime Database
+    implementation 'com.firebaseui:firebase-ui-database:8.0.2'
+
+    // FirebaseUI for Cloud Firestore
+    implementation 'com.firebaseui:firebase-ui-firestore:8.0.2'
+
+    // FirebaseUI for Firebase Auth
+    implementation 'com.firebaseui:firebase-ui-auth:8.0.2'
+
+    // FirebaseUI for Cloud Storage
+    implementation 'com.firebaseui:firebase-ui-storage:8.0.2'
 
     // Camera dependencies
     def camerax_version = "1.1.0-beta01"
