@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+
 import com.applandeo.materialcalendarview.CalendarView;
 
 import androidx.annotation.NonNull;
@@ -40,6 +42,7 @@ public class SmartFitMainActivity extends AppCompatActivity {
     private CalendarView calendarView;
     private Button checkinButton;
     private Button finishButton;
+    private TextView completion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,7 +111,8 @@ public class SmartFitMainActivity extends AppCompatActivity {
             }
         });
 
-        // add checked in dates
+        // add checked in dates and completion
+        completion = findViewById(R.id.tv_comp);
         FirebaseFirestore.getInstance().collection("Check")
                 . document(FirebaseAuth.getInstance().getUid())
                 .addSnapshotListener(new EventListener<DocumentSnapshot>() {
@@ -123,14 +127,16 @@ public class SmartFitMainActivity extends AppCompatActivity {
                                 ex.printStackTrace();
                             }
                             if (list != null) {
+                                Date today = stringToDate(
+                                        new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date()));
                                 List<EventDay> events = new ArrayList<>();
-                                for (int i = 0; i < list.size(); i++) {
+                                completion.setText(Integer.toString(list.size()));
+                                for (int i = list.size() - 1; i >= 0; i--) {
                                     String temp = list.get(i);
                                     Date date = stringToDate(temp);
-                                    Date today = stringToDate(
-                                            new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date()));
+                                    // show completed banner if already checked in
                                     if (date.compareTo(today) == 0){
-                                        finishButton.setVisibility(View.VISIBLE);;
+                                        finishButton.setVisibility(View.VISIBLE);
                                     }
                                     Calendar calendar = Calendar.getInstance();
                                     calendar.setTime(date);
@@ -178,6 +184,7 @@ public class SmartFitMainActivity extends AppCompatActivity {
         });
     }
 
+    // helper method to transform date from string format to date obj
     public  Date stringToDate(String strTime)
     {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");

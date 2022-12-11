@@ -15,39 +15,28 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.a7atyourservice.model.Check;
 import com.example.a7atyourservice.model.Foods;
 import com.example.a7atyourservice.model.Goal;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.Timestamp;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
 
 
 public class DietActivity extends AppCompatActivity implements View.OnClickListener{
@@ -103,7 +92,7 @@ public class DietActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
-        // initiate recycle view for each meal
+        // initiate recycle view and adapters for each meal
         bfList = new ArrayList<>();
         lcList = new ArrayList<>();
         dnList = new ArrayList<>();
@@ -139,7 +128,8 @@ public class DietActivity extends AppCompatActivity implements View.OnClickListe
         today.set(Calendar.MINUTE, 0);
         today.set(Calendar.HOUR_OF_DAY, 0);
         time = today.getTimeInMillis();
-        // find current goal
+
+        // display current goal; if no goal has been set, set it to default 2000 and keep in database
         Helpers.getCollectionReferenceForGoals().addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -157,8 +147,7 @@ public class DietActivity extends AppCompatActivity implements View.OnClickListe
 
         });
 
-
-        // set new goal
+        // set new goal to replace the old goal and keep in database
         calGoal.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -307,7 +296,7 @@ public class DietActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
-    // FAB menu animation
+    // FAB menu animation helper function - open
     private void showFABMenu(){
         isFABOpen=true;
         buttonAddBf.animate().translationY(-560);
@@ -320,6 +309,7 @@ public class DietActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.tv_sn).setVisibility(View.VISIBLE);
     }
 
+    // FAB menu animation helper function - close
     private void closeFABMenu(){
         isFABOpen=false;
         buttonAddBf.animate().translationY(0);
@@ -332,6 +322,7 @@ public class DietActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.tv_sn).setVisibility(View.INVISIBLE);
     }
 
+    // set up FAB menu listener
     @Override
     public void onClick(View view) {
         switch (view.getId()){
@@ -350,6 +341,7 @@ public class DietActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+   // promp input for the food
     public void popUpWindow(String meal){
         final String myMeal = meal;
         AlertDialog.Builder builder
@@ -377,6 +369,7 @@ public class DietActivity extends AppCompatActivity implements View.OnClickListe
         dialog.show();
     }
 
+    // save food to the database
     private void saveMeal(String meal, String name, int fat, int carb, int protein){
         DocumentReference documentReference;
         documentReference = Helpers.getCollectionReferenceForDiets().document();
