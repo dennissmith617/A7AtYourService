@@ -155,6 +155,7 @@ public class LiftingActivity extends AppCompatActivity implements View.OnClickLi
         });
     }
 
+
     class CounterRunnable implements Runnable {
 
         @Override

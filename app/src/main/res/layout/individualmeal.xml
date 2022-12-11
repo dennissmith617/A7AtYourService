@@ -40,16 +40,6 @@
         app:layout_constraintRight_toRightOf="parent"
         />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/addFoodFab"
-        android:layout_width="38dp"
-        android:layout_height="26dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="44dp"
-        app:fabCustomSize="30dp"
-
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/mealRecycleView" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

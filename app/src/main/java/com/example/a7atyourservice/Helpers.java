@@ -6,7 +6,9 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+
 
 public class Helpers {
 
@@ -19,4 +21,28 @@ public class Helpers {
         return FirebaseFirestore.getInstance().collection("workouts").
                 document(firebaseUser.getUid()).collection("my_workouts");
     }
+
+    public static CollectionReference getCollectionReferenceForCamera() {
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        return FirebaseFirestore.getInstance().collection("images").
+                document(firebaseUser.getUid()).collection("my_images");
+    }
+
+    public static CollectionReference getCollectionReferenceForDiets() {
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        return FirebaseFirestore.getInstance().collection("diets").
+                document(firebaseUser.getUid()).collection("my_foods");
+    }
+    public static DocumentReference getCollectionReferenceForGoals() {
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        return FirebaseFirestore.getInstance().collection("goal").
+                document(firebaseUser.getUid());
+    }
+
+    public static DocumentReference getCheckRef() {
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        return FirebaseFirestore.getInstance().collection("Check").
+                document(firebaseUser.getUid());
+    }
+
 }
