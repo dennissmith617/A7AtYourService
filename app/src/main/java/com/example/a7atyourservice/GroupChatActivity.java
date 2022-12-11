@@ -3,7 +3,7 @@ package com.example.a7atyourservice;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.CalendarView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ScrollView;
@@ -28,6 +28,7 @@ import java.util.Iterator;
 
 public class GroupChatActivity extends AppCompatActivity {
     private Toolbar mToolbar;
+    private Button backButton;
     private ImageButton SendMessageButton;
     private EditText userMessageInput;
     private ScrollView mScrollView;
@@ -46,7 +47,7 @@ public class GroupChatActivity extends AppCompatActivity {
         setContentView(R.layout.activity_group_chat);
 
 
-        ///currentGroupName = savedInstanceState.getString();
+        backButton = findViewById(R.id.chatButtonBack);
 
         currentGroupName = getIntent().getExtras().get("GroupName").toString();
         Toast.makeText(GroupChatActivity.this, currentGroupName, Toast.LENGTH_SHORT).show();
@@ -75,6 +76,14 @@ public class GroupChatActivity extends AppCompatActivity {
                 userMessageInput.setText("");
 
                 mScrollView.fullScroll(ScrollView.FOCUS_DOWN);
+            }
+        });
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // close out activity
+                finish();
             }
         });
     }
@@ -208,11 +217,9 @@ public class GroupChatActivity extends AppCompatActivity {
 
             String chatDate = (String) ((DataSnapshot)iterator.next()).getValue();
             String chatMessage = (String) ((DataSnapshot)iterator.next()).getValue();
-            //String chatName = (String) ((DataSnapshot)iterator.next()).getValue();
             String chatTime = (String) ((DataSnapshot)iterator.next()).getValue();
 
 
-            //displayTextMessages.append(chatName + " :\n" + chatMessage + "\n" + chatTime + "     " + chatDate + "\n\n\n");
             displayTextMessages.append( chatMessage + "\n" + chatTime + "     " + chatDate + "\n\n\n");
 
             mScrollView.fullScroll(ScrollView.FOCUS_DOWN);
