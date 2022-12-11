@@ -129,6 +129,9 @@ public class SocialActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()){
+                    Helpers.showToast(SocialActivity.this, "group successfully created");
+                } else {
+                    Helpers.showToast(SocialActivity.this, "group unable to be created");
                 }
             }
         });

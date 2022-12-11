@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -24,6 +25,7 @@ import java.util.Set;
 public class GroupsActivity extends AppCompatActivity {
 
     private ListView groupView;
+    private Button backButton;
     private ArrayAdapter<String> arrayAdapter;
     private ArrayList<String> list_of_groups = new ArrayList<>();
 
@@ -33,6 +35,8 @@ public class GroupsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_groups);
+
+        backButton = findViewById(R.id.groupBackButton);
 
         groupView = findViewById(R.id.groupList);
         GroupRef = FirebaseDatabase.getInstance().getReference().child("Groups");
@@ -50,6 +54,14 @@ public class GroupsActivity extends AppCompatActivity {
                 Intent groupChatIntent = new Intent(getApplicationContext(), GroupChatActivity.class);
                 groupChatIntent.putExtra("GroupName", currentGroupName);
                 startActivity(groupChatIntent);
+            }
+        });
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // close out activity
+                finish();
             }
         });
     }
